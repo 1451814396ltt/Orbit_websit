@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf2f8">
+<!--  <title id="page-title">加载中...</title>-->
+  <title>Orbit 星轨 — 全域智能业务运营平台</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="glass.css">
+</head>
+<body>
+  <div class="site-ambient" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-one"></div>
+    <div class="ambient-orb ambient-orb-two"></div>
+  </div>
+
+  <!--  页头区域-->
+  <header class="site-header">
+    <div class="nav-shell">
+      <!-- 品牌 Logo 区域改造 -->
+      <a class="brand" href="#home" aria-label="宇致软件 Orbit 星轨首页">
+        <img src="unizy-logo.png" alt="宇致软件" class="logo-unizy">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <img src="orbit-logo.png" alt="Orbit 星轨" class="logo-orbit">
+      </a>
+
+      <nav>
+        <a href="#home">首页</a>
+        <a href="#product">产品能力</a>
+        <a href="#industry">适配行业</a>
+        <a href="#support">服务支持</a>
+      </nav>
+      <button class="nav-cta" data-trial >预约演示</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="home" class="hero section-shell">
+      <div class="hero-copy">
+        <h1>ORBIT 星轨<br>
+          <span class="keep-together">企业 AI 超级智能管理平台</span>
+        </h1>
+
+        <p class="hero-lead">以 ESI 智能 Agent 替代人工操作，打通财务、供应链与生产<br>自动执行重复工作，让经营数据实时流转。</p>
+        <div class="button-row">
+          <button class="button button-dark" data-trial>免费体验 <svg class="icon"><use href="#i-arrow"/></svg></button>
+          <button class="button button-outline" data-contact>预约对接</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <!-- 动态数据流线 -->
+        <div class="data-flow-canvas">
+          <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet">
+            <path class="flow-path" d="M 180 160 C 250 160, 250 260, 320 260" />
+            <path class="flow-path" d="M 420 260 C 480 260, 480 160, 550 160" />
+            <path class="flow-path" d="M 320 360 C 250 360, 250 260, 180 260" />
+          </svg>
+        </div>
+
+        <div class="dashboard-mockup">
+          <div class="dash-sidebar">
+            <div class="dash-logo">ORBIT 星轨</div>
+            <div class="dash-menu">
+              <span class="active">经营看板</span>
+              <span>订单协同</span>
+              <span>财务核算</span>
+              <span>库存预警</span>
+            </div>
+          </div>
+          <div class="dash-content">
+            <div class="dash-header">
+              <span>经营实时看板</span>
+              <span class="live-badge"><span class="dot"></span> AI 在线</span>
+            </div>
+            <!-- AI 交互输入框 -->
+            <div class="ai-interaction-area">
+              <div class="ai-input-wrapper">
+                <svg class="ai-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <input type="text" id="ai-user-input" placeholder="试着向 AI 下达指令，如：查一下库存..." autocomplete="off">
+                <button id="ai-send-btn">发送</button>
+              </div>
+              <div class="ai-quick-prompts">
+                <button class="quick-prompt" data-prompt="帮我查一下库存预警">查库存预警</button>
+                <button class="quick-prompt" data-prompt="自动生成今天的经营日报">生成经营日报</button>
+                <button class="quick-prompt" data-prompt="核对一下本月的财务流水">核对财务流水</button>
+              </div>
+            </div>
+            <div class="dash-grid">
+              <div class="dash-card" id="card-revenue">
+                <span>经营看板</span>
+                <div class="chart-container">
+                  <div class="bar" style="--h: 40%"></div>
+                  <div class="bar" style="--h: 70%"></div>
+                  <div class="bar" style="--h: 50%"></div>
+                  <div class="bar" style="--h: 90%"></div>
+                </div>
+                <div class="dash-val" data-bind="revenue">¥ 2,450,000</div>
+              </div>
+              <div class="dash-card" id="card-orders">
+                <span>订单协同</span>
+                <div class="chart-container">
+                  <div class="bar" style="--h: 60%"></div>
+                  <div class="bar" style="--h: 30%"></div>
+                  <div class="bar" style="--h: 80%"></div>
+                  <div class="bar" style="--h: 50%"></div>
+                </div>
+                <div class="dash-val" data-bind="orders">1,248 笔</div>
+              </div>
+              <div class="dash-card" id="card-production">
+                <span>生产计划</span>
+                <div class="chart-container">
+                  <div class="bar" style="--h: 80%"></div>
+                  <div class="bar" style="--h: 85%"></div>
+                  <div class="bar" style="--h: 60%"></div>
+                  <div class="bar" style="--h: 40%"></div>
+                </div>
+                <div class="dash-val" data-bind="production">进度 85%</div>
+              </div>
+              <div class="dash-card" id="card-finance">
+                <span>财务核算</span>
+                <div class="chart-line-container">
+                  <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                    <path class="line-path" d="M0,25 Q20,10 40,20 T80,5 T100,15" />
+                  </svg>
+                </div>
+                <div class="dash-val" data-bind="finance">已核验 342 笔</div>
+              </div>
+              <div class="dash-card" id="card-stock">
+                <span>库存预警</span>
+                <div class="chart-container warning">
+                  <div class="bar" style="--h: 20%"></div>
+                  <div class="bar" style="--h: 15%"></div>
+                  <div class="bar" style="--h: 80%"></div>
+                  <div class="bar" style="--h: 30%"></div>
+                </div>
+                <div class="dash-val text-warn" data-bind="stock">3 项紧缺</div>
+              </div>
+              <div class="dash-card esi-core">
+                <span>ESI Agent</span>
+                <div class="agent-sphere"><div class="core"></div></div>
+                <div class="dash-val" data-bind="agent">智能协同已就绪</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating-chat chat-left">
+          <div class="chat-header">
+            <div class="chat-title">Orbit 助手</div>
+            <span class="close-icon">×</span>
+          </div>
+          <div class="chat-body" id="chat-log">
+            <div class="chat-bubble ai">系统已接入底层数据，正在监控业务流。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 产品能力模块 ===== -->
+    <section id="product" class="island-solutions-section">
+      <div class="section-divider">
+        <span class="divider-line"></span>
+        <span class="divider-text">全景核心能力 · 构筑数字底座</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <!-- 环绕式亮点图 (6点星盘) -->
+      <div class="orbit-highlight-wrapper">
+        <!-- 背景同心圆 -->
+        <div class="orbit-rings">
+          <!-- 雷达波纹 (放在最底层，不断向外扩散) -->
+          <div class="radar-wave wave-1"></div>
+          <div class="radar-wave wave-2"></div>
+          <div class="radar-wave wave-3"></div>
+
+          <!-- 原有的虚线大圆圈 -->
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+        </div>
+
+        <!-- 中心核心圆 -->
+        <div class="orbit-core">
+          <img src="orbit-logo.png" alt="Orbit 星轨" class="core-logo">
+          <br>
+          <div class="core-title">核心优势</div>
+          <div class="core-content">ORBIT CORE</div>
+
+        </div>
+
+        <!-- 左侧节点群 -->
+        <div class="orbit-node node-l1">
+          <div class="node-card">
+            <div class="node-num">01</div>
+            <h3 class="node-title">解决数据孤岛</h3>
+            <p class="node-desc">统一底层数据底座，打通财务、供应链与生产系统，实现全链路数据实时流转与无缝协同。</p>
+          </div>
+        </div>
+        <div class="orbit-node node-l2">
+          <div class="node-card">
+            <div class="node-num">02</div>
+            <h3 class="node-title">文件智能处理</h3>
+            <p class="node-desc">AI Agent 赋能，自动识别与归档各类单据合同，大幅降低人工录入成本，让数据秒变资产。</p>
+          </div>
+        </div>
+        <div class="orbit-node node-l3">
+          <div class="node-card">
+            <div class="node-num">03</div>
+            <h3 class="node-title">审批流风险预警</h3>
+            <p class="node-desc">流程自动化与智能风控结合，实时监控流转节点，对异常自动触发预警，让风险管控前置。</p>
+          </div>
+        </div>
+
+        <!-- 右侧节点群 -->
+        <div class="orbit-node node-r1">
+          <div class="node-card">
+            <div class="node-num">04</div>
+            <h3 class="node-title">自定义数据看板</h3>
+            <p class="node-desc">抛弃固定模板，按需拖拽拼接数据卡片与图表，千人千面打造最适合您业务视角的专属驾驶舱。</p>
+          </div>
+        </div>
+        <div class="orbit-node node-r2">
+          <div class="node-card">
+            <div class="node-num">05</div>
+            <h3 class="node-title">移动协同办公</h3>
+            <p class="node-desc">打破时空限制，待办审批、业务跟单全面移动化，随时随地高效协同，释放组织效能。</p>
+          </div>
+        </div>
+        <div class="orbit-node node-r3">
+          <div class="node-card">
+            <div class="node-num">06</div>
+            <h3 class="node-title">灵活业务拓展</h3>
+            <p class="node-desc">基于高配置引擎，支持自定义表单与流程，无缝适配企业未来业务变化，伴随企业成长。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 滚动通报走马灯 -->
+    <section class="marquee-section">
+      <div class="marquee">
+        <div class="marquee-track">
+          <span><strong>审批流转</strong> · 常规单据 AI 自动处理，无需人工等候</span>
+          <span><strong>跨部门取数</strong> · 一句话调取业务数据，告别繁琐导出</span>
+          <span><strong>风险预警</strong> · 异常单据自动拦截，把风险挡在前面</span>
+          <span><strong>规则调整</strong> · 业务变了直接改，无需找 IT 排期开发</span>
+          <span><strong>基础档案</strong> · 自然语言直接修改，告别繁琐表单</span>
+          <span><strong>自动催办</strong> · 卡住的流程自动追进度，不再当“救火队长”</span>
+          <!-- 重复一遍用于无缝滚动 -->
+          <span><strong>审批流转</strong> · 常规单据 AI 自动处理，无需人工等候</span>
+          <span><strong>跨部门取数</strong> · 一句话调取业务数据，告别繁琐导出</span>
+          <span><strong>风险预警</strong> · 异常单据自动拦截，把风险挡在前面</span>
+          <span><strong>规则调整</strong> · 业务变了直接改，无需找 IT 排期开发</span>
+          <span><strong>基础档案</strong> · 自然语言直接修改，告别繁琐表单</span>
+          <span><strong>自动催办</strong> · 卡住的流程自动追进度，不再当“救火队长”</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 产品适配行业模块 ===== -->
+    <section id="industry" class="section-industry">
+       <div class="section-divider">
+         <span class="divider-line"></span>
+         <span class="divider-text">广泛适配 · 赋能百业</span>
+         <span class="divider-line"></span>
+       </div>
+
+      <div class="industry-header-wrap">
+        <p class="industry-desc">
+          Orbit 星轨致力于为不同行业的成长型企业提供智能化底座，我们的目标客户广泛覆盖生产制造与现代服务等领域。<br>平台提供灵活的配置能力，让 AI 智能引擎与统一数据底座无缝融入您的实际业务场景，解决真实痛点。
+        </p>
+
+        <!-- 💥 全局唯一的留资按钮放在顶部，更大气 -->
+        <button class="button button-dark industry-global-btn" data-trial>
+          获取您的行业专属方案 <svg class="icon"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+
+      <div class="industry-grid">
+        <!-- 1. 生产制造 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          </div>
+          <h3>生产制造</h3>
+          <p>打通销售、计划、采购、生产与库存，让 AI 自动跟催订单、核算成本、预警物料。</p>
+        </div>
+
+        <!-- 2. 商贸流通 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <h3>商贸流通</h3>
+          <p>解决多级分销、多仓调拨与高频交易的数据混乱，智能补货让商品周转率大幅提升。</p>
+        </div>
+
+        <!-- 3. 项目工程 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </div>
+          <h3>项目工程</h3>
+          <p>从立项、预算、采购到施工验收全周期管理，精准控制成本，保障项目准时交付。</p>
+        </div>
+
+        <!-- 4. 现代服务 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <h3>现代服务</h3>
+          <p>物流运输、物业运维、设备租赁等场景的工单智能流转，提升服务响应速度与客户体验。</p>
+        </div>
+
+        <!-- 5. 科技研发 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          </div>
+          <h3>科技研发</h3>
+          <p>工时自动归集、研发台账一键生成，轻松应对高企认定与加计扣除，让研发团队专注创新。</p>
+        </div>
+
+        <!-- 6. 医疗健康 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <h3>医疗设备</h3>
+          <p>设备安装验收、维保合约、备件耗材与科室协同，确保医疗资产安全、高效运转。</p>
+        </div>
+
+        <!-- 7. 物流运输 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+          </div>
+          <h3>物流运输</h3>
+          <p>车辆调度、运费核算、在途跟踪与承运商对账，让每一次运输都清晰可控。</p>
+        </div>
+
+        <!-- 8. 政企服务 -->
+        <div class="industry-card" data-trial>
+          <div class="industry-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <h3>政企服务</h3>
+          <p>项目审批流、资产全生命周期管理、费用合规与预算管控，助力组织高效透明运转。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 服务与支持模块 ===== -->
+    <section id="support" class="section-support">
+      <!-- 带线条的标题分隔 -->
+      <div class="section-divider">
+        <span class="divider-line"></span>
+        <span class="divider-text">全国多点布局 · 属地化直营保障</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <!-- 主体大卡片 -->
+      <div class="service-map-card">
+        <!-- 左侧：地图 -->
+        <div class="service-map-visual">
+          <div id="service-map-echarts" style="width: 100%; height: 520px;"></div>
+        </div>
+
+        <!-- 右侧：信息面板 -->
+        <div class="service-map-info">
+          <div class="service-map-badge">
+            <span class="status-dot"></span>
+            立足核心经济圈 · 深度本土化服务
+          </div>
+
+          <h3 class="service-map-title">
+            公司深度布局，<br>
+            <span class="text-orange">覆盖更广、响应更快</span>
+          </h3>
+
+          <p class="service-map-desc">
+            全国多点布局，<strong>服务覆盖广阔</strong>。兼顾远程支持与线下到场服务，具备本地化售后交付能力。
+          </p>
+
+          <div class="service-region-tags">
+            <!-- 华北 -->
+            <span class="service-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              华北：北京 / 天津 / 河北
+            </span>
+            <!-- 华东 -->
+            <span class="service-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              华东：上海 / 江苏 / 浙江
+            </span>
+            <!-- 华南 -->
+            <span class="service-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              华南：广州 / 深圳 / 珠海
+            </span>
+            <!-- 西南 -->
+            <span class="service-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              西南：成都
+            </span>
+          </div>
+
+          <!-- 统计数据（蓝色数字） -->
+          <div class="service-map-stats">
+            <div class="stat-item">
+              <span class="stat-num">
+                9<span class="stat-sub">+</span>
+              </span>
+              <span class="stat-label">直属分公司网点</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">
+                4<span class="stat-sub">大</span>
+              </span>
+              <span class="stat-label">核心经济圈覆盖</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">
+                100<span class="stat-sub">%</span>
+              </span>
+              <span class="stat-label">属地化直营团队</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 服务与支持（四大保障） ===== -->
+      <div class="services-sub-section">
+        <div class="services-grid">
+          <!-- 1. 业务诊断 -->
+          <div class="service-card">
+            <div class="service-icon" style="color: #326cd2; background: rgba(50, 108, 210, 0.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l2 2"/></svg>
+            </div>
+            <h3>业务诊断</h3>
+            <p>告诉我们你的现状，顾问帮你看清企业运转里的损耗点。</p>
+          </div>
+
+          <!-- 2. 数据安全 -->
+          <div class="service-card">
+            <div class="service-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h3>数据安全</h3>
+            <p>严格保护客户业务数据与隐私信息，杜绝客户数据外泄，保障数据安全可控。</p>
+          </div>
+
+          <!-- 3. 售后支持 -->
+          <div class="service-card">
+            <div class="service-icon" style="color: #e66a13; background: rgba(230, 106, 19, 0.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </div>
+            <h3>专属售后</h3>
+            <p>一对一帮你把流程跑顺，让系统真正为你的企业工作。</p>
+          </div>
+
+          <!-- 4. 30天免费试用 -->
+          <div class="service-card" data-trial style="cursor: pointer;">
+            <div class="service-icon" style="color: #8b5cf6; background: rgba(139, 92, 246, 0.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3>30天免费试用</h3>
+            <p>30 天免费试用，实景沙盘，亲身感受 AI 带来的高效协同。
+              <span class="try-now">立即申请 →</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 守护数据资产新板块 ===== -->
+    <section class="data-security-section">
+      <div class="security-container">
+
+        <!-- 左侧：核心宣言 -->
+        <div class="security-intro">
+          <div class="security-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            合规对标 · 安全可控
+          </div>
+          <h2 class="security-title">守护企业数据，<br>是星轨 ORBIT 的<br><span class="text-orange">首要准则</span></h2>
+          <p class="security-desc">
+            星轨 ORBIT 围绕企业数据资产构建严谨的权限管理与隐私隔离机制，以高标准的合规设计守护业务单据、报表与档案，确保您的数据仅为您所用。
+          </p>
+        </div>
+
+        <!-- 右侧：三大防护体系卡片 -->
+        <div class="security-features">
+
+          <!-- 卡片 1 -->
+          <div class="security-card">
+            <div class="s-card-header">
+              <div class="s-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <h4>ISO/IEC 27001 信息安全管理体系</h4>
+            </div>
+            <div class="s-card-text">
+              <p>产品安全流程与管控机制严格对标国际 ISO/IEC 27001 规范设计，建立全周期的安全与保密管控流程。</p>
+            </div>
+          </div>
+
+          <!-- 卡片 2 -->
+          <div class="security-card">
+            <div class="s-card-header">
+              <div class="s-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+              </div>
+              <h4>等保三级标准建设</h4>
+            </div>
+            <div class="s-card-text">
+              <p>系统安全架构对标公安部网络安全等级保护三级标准，全面适配国内企业数据合规与审计要求。</p>
+            </div>
+          </div>
+
+          <!-- 卡片 3：核心（重点改这里，强调隐私隔离和不授权不可见） -->
+          <div class="security-card highlight-card">
+            <div class="s-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <div class="s-card-text">
+              <h4>严格的数据隔离与隐私保护</h4>
+              <p>实现租户级物理与逻辑隔离，文件传输采用 SSL/TLS 加密。遵循最小权限准则，<strong>仅企业内部授权管理员可查阅自有数据；未经企业明确授权，平台方及任何第三方均无法查看或使用您的数据。</strong></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚区域 -->
+  <footer class="site-footer">
+    <div class="footer-shell">
+      <div class="footer-top">
+        <!-- 左侧：品牌与简介 -->
+        <div class="footer-brand">
+          <a href="#home" class="footer-logo-link">
+            <img src="unizy-logo.png" alt="宇致软件" class="footer-logo-unizy">
+            <div class="footer-brand-text">
+              <span class="footer-brand-name">宇致软件</span>
+              <span class="footer-brand-sub">UNIZY SOFTWARE</span>
+            </div>
+          </a>
+          <p class="footer-desc">宇致软件旗下产品 Orbit 星轨。<br>释放人力心力，赋能企业增长。</p>
+        </div>
+
+        <!-- 中间：导航链接 -->
+        <div class="footer-links">
+          <h4>探索星轨</h4>
+          <ul>
+            <li><a href="#product">产品能力</a></li>
+            <li><a href="#industry">适配行业</a></li>
+            <li><a href="#support">服务保障</a></li>
+<!--            <li><a href="Operation_Manual.html">使用手册</a></li>-->
+            <li><a href="https://www.yuque.com/litingting-pfomh/bb7e7a/ad6arh2z5s4nm43u">使用手册</a></li>
+          </ul>
+        </div>
+
+        <!-- 右侧：联系方式 -->
+        <div class="footer-contact">
+          <h4>聊聊你的业务</h4>
+          <!-- 👇 抖音号关联按钮 👇 -->
+          <!-- 记得把 href 里的链接换成你们真实的抖音主页地址 -->
+          <a href="https://www.douyin.com/user/MS4wLjABAAAA09vy8rBqxkHthSjTMXDInILARQo5a_OlDfaz4fDvvNE?from_tab_name=main" target="_blank" rel="noopener" class="footer-social">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+            关注我们的抖音
+          </a>
+          <a href="mailto:yuzhiruanjian@163.com" class="footer-email">
+            yuzhiruanjian@163.com
+          </a>
+          <button class="footer-email" data-trial style="background: none; border: none; padding: 0; cursor: pointer; text-align: left;">
+            预约一次 AI 业务诊断 <span class="arrow">→</span>
+          </button>
+          <a href="tel:18069816520" class="footer-email">
+            180 6981 6520 <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 底部：版权与标语 -->
+      <div class="footer-bottom">
+        <span ondblclick="triggerExport()" style="cursor: pointer;" title="管理员入口">© 2026 宇致软件 · 旗下产品 Orbit 星轨</span>
+        <p class="footer-slogan">让企业的每一天，更进一步。</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 免费体验留资弹窗 -->
+  <dialog id="trial-dialog" class="trial-dialog" aria-labelledby="trial-title">
+    <button class="dialog-close" data-close aria-label="关闭">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+
+    <span class="eyebrow"><span class="status-dot"></span> FREE TRIAL</span>
+    <h2 id="trial-title">先留个联系方式，<br>顾问带你体验。</h2>
+    <p class="dialog-intro">填写后，专属顾问会在 10 分钟内联系你，<br>帮你用真实业务问题跑一遍。</p>
+
+    <form id="trial-form" class="trial-form" novalidate>
+      <div class="form-row">
+        <label for="trial-name">怎么称呼你</label>
+        <input type="text" id="trial-name" name="name" placeholder="例如：王总" required minlength="2">
+      </div>
+      <div class="form-row">
+        <label for="trial-phone">手机号</label>
+        <!-- pattern 限制为 11 位数字，maxlength 限制输入长度 -->
+        <input type="tel" id="trial-phone" name="phone" placeholder="用于顾问联系你" required pattern="^1[3-9]\d{9}$" maxlength="11" title="请输入 11 位有效手机号">
+      </div>
+      <div class="form-row">
+        <label for="trial-company">公司名称</label>
+        <input type="text" id="trial-company" name="company" placeholder="例如：某某科技有限公司" required>
+      </div>
+      <div class="form-row">
+        <label for="trial-need">你最想先解决什么问题？<span class="optional">（选填）</span></label>
+        <textarea id="trial-need" name="need" rows="3" placeholder="例如：审批太慢、数据要不到、流程卡住……"></textarea>
+      </div>
+
+      <!-- 垂直滚动播报 ... -->
+      <div class="trial-vertical-ticker">
+        <span class="status-dot"></span>
+        <div class="ticker-window">
+          <!-- 保持完全为空，只留 id，交给 JS 生成 -->
+          <div class="ticker-list" id="tickerList"></div>
+        </div>
+      </div>
+      <button type="submit" class="button button-dark trial-submit">
+        提交，预约体验 <svg class="icon"><use href="#i-arrow"/></svg>
+      </button>
+      <p class="form-note">...</p>
+    </form>
+
+  </dialog>
+  <!-- 👇 新增：独立提交成功提示弹窗 👇 -->
+  <dialog id="success-dialog" class="trial-dialog" aria-labelledby="success-title">
+    <button class="dialog-close" data-success-close aria-label="关闭">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+    <div class="trial-success">
+      <div class="success-icon">✓</div>
+      <h2 id="success-title" style="margin-top: 16px; margin-bottom: 8px;">已收到，顾问马上联系你。</h2>
+      <p class="dialog-intro" style="margin-bottom: 24px;">请保持手机畅通，我们会在 10 分钟内为您接入专属顾问。</p>
+      <button class="button button-dark" data-success-close style="width: 100%; padding: 12px;">知道了</button>
+    </div>
+  </dialog>
+
+  <!-- 👇 隐藏宣传视频彩蛋 👇 -->
+  <div id="secretVideoModal" class="secret-video-modal">
+    <div class="secret-video-content">
+      <button class="secret-close-btn" id="closeSecretVideo">✕</button>
+      <video id="promoVideo" controls playsinline>
+        <!-- 记得把 src 换成你真实的宣传视频路径 -->
+        <source src="promo.mp4" type="video/mp4">
+        您的浏览器不支持视频播放。
+      </video>
+    </div>
+  </div>
+
+  <!-- 👇 隐藏的管理员密码验证弹窗 👇 -->
+  <dialog id="adminPasswordDialog" style="padding: 24px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+    <h3 style="margin-top: 0; font-size: 18px; color: #111;">管理员验证</h3>
+    <p style="font-size: 13px; color: #666; margin-bottom: 16px;">请输入密码以导出客户线索数据：</p>
+    <form id="adminAuthForm">
+      <input type="password" id="adminPasswordInput" placeholder="请输入密码" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 16px; box-sizing: border-box; font-size: 14px; outline: none;">
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button type="button" onclick="document.getElementById('adminPasswordDialog').close()" style="padding: 8px 16px; border-radius: 8px; border: none; background: #eee; cursor: pointer;">取消</button>
+        <button type="submit" style="padding: 8px 16px; border-radius: 8px; border: none; background: #111; color: #fff; cursor: pointer;">确认导出</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/china.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

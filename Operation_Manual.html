@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星轨ORBIT 用户使用手册</title>
+    <style>
+     /* =========================================
+       官网同款极简/毛玻璃主题 (Orbit 星轨)
+       ========================================= */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    :root {
+        /* 提取官网的核心色值 */
+        --primary: #111111;
+        --orange: #ff7e36;
+        --orange-light: rgba(255, 126, 54, 0.08);
+
+        --text-main: #111111;
+        --text-body: #4a4a4a;
+        --text-sub: #787878;
+
+        --border: rgba(0, 0, 0, 0.08);
+        --border-light: rgba(0, 0, 0, 0.04);
+
+        --bg-body: #f4f5f7; /* 对应 glass.css 的底纸色 */
+        --bg-glass: rgba(255, 255, 255, 0.65);
+        --bg-card: rgba(255, 255, 255, 0.85);
+
+        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+        background-color: #eef0f3; /* 基础底色 */
+
+        /* 细微的网格纹理保留在 body 上 */
+        background-image:
+            linear-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+        background-size: 56px 56px;
+        background-attachment: fixed;
+
+        color: var(--text-main);
+        line-height: 1.7;
+        display: flex;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    /* ========== 侧边栏 ========== */
+    .sidebar {
+        width: 280px;
+        background: var(--bg-card);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-right: 1px solid var(--border);
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 32px 0 40px;
+        z-index: 100;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .sidebar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+
+    .sidebar-logo-wrap {
+        padding: 0 24px 24px;
+        border-bottom: 1px solid var(--border-light);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .sidebar-logo-wrap img {
+        width: 110px;
+        height: auto;
+        display: block;
+        margin: 0 auto 12px;
+    }
+
+    .sidebar-logo-wrap .manual-badge {
+        display: inline-block;
+        background: var(--orange-light);
+        color: var(--orange);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        padding: 4px 14px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 126, 54, 0.2);
+    }
+
+    /* ========== 导航 ========== */
+    .sidebar ul {
+        list-style: none;
+        padding: 0 16px;
+    }
+
+    .sidebar li {
+        margin-bottom: 4px;
+    }
+
+    .sidebar li a {
+        display: block;
+        padding: 10px 16px;
+        border-radius: 12px;
+        color: var(--text-sub);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+    }
+
+    .sidebar li a:hover {
+        background: rgba(0, 0, 0, 0.03);
+        color: var(--text-main);
+    }
+
+    .sidebar li a.active {
+        background: #ffffff;
+        color: var(--orange);
+        border-left-color: var(--orange);
+        font-weight: 600;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-light);
+        border-left: 3px solid var(--orange);
+    }
+
+    /* ========== 移动端菜单按钮 ========== */
+    .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 200;
+        width: 44px;
+        height: 44px;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+        font-size: 20px;
+        color: var(--text-main);
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(2px);
+        z-index: 90;
+    }
+
+    /* ========== 主内容区 ========== */
+    .main-wrap {
+        margin-left: 280px;
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+        min-height: 100vh;
+    }
+
+    /* ========== 顶部头部 ========== */
+    .top-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid var(--border-light);
+        padding: 16px 70px;
+    }
+
+    .top-header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .top-header-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-main);
+        letter-spacing: -0.2px;
+    }
+
+    .top-header-title .th-logo {
+        height: 26px;
+        width: auto;
+        display: block;
+        flex-shrink: 0;
+    }
+
+    .top-header-title .th-divider {
+        width: 1px;
+        height: 16px;
+        background: var(--border);
+        flex-shrink: 0;
+    }
+
+    .top-header-title .th-text {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    .top-header-title .th-icon {
+        font-size: 16px;
+    }
+
+    /* 角色标签 */
+    .role-tabs {
+        display: flex;
+        gap: 6px;
+        background: rgba(0, 0, 0, 0.04);
+        padding: 5px;
+        border-radius: 12px;
+        border: 1px solid var(--border-light);
+    }
+
+    .role-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 16px;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-sub);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        white-space: nowrap;
+    }
+
+    .role-tab:hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .role-tab.active {
+        background: #ffffff;
+        color: var(--text-main);
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .role-tab.active .role-icon {
+        filter: none;
+    }
+
+    .role-tab .role-icon {
+        font-size: 14px;
+        flex-shrink: 0;
+        filter: grayscale(100%) opacity(0.6);
+        transition: filter 0.2s;
+    }
+
+    /* 内容容器 */
+    .container {
+        padding: 50px 70px 80px;
+    }
+
+    .content-section {
+        display: none;
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    .content-section.show {
+        display: block;
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 标题排版 */
+    h1 {
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--text-main);
+        text-align: left;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 40px;
+    }
+
+    h2 {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin: 40px 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-main);
+        margin: 26px 0 10px;
+    }
+
+    p {
+        margin-bottom: 12px;
+        color: var(--text-body);
+    }
+
+    ul, ol {
+        margin: 10px 0 16px 24px;
+        color: var(--text-body);
+    }
+
+    li {
+        margin-bottom: 6px;
+    }
+
+    /* 提示框 - 改为官网极简毛玻璃风格 */
+    .tip-box {
+        background: var(--orange-light);
+        border: 1px solid rgba(255, 126, 54, 0.2);
+        border-left: 4px solid var(--orange);
+        padding: 18px 24px;
+        border-radius: 12px;
+        margin: 16px 0;
+        color: var(--text-body);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .tip-box strong {
+        color: var(--orange);
+    }
+
+    /* 代码块 - 改为深灰哑光质感 */
+    .code-block {
+        background: #18181b;
+        color: #e4e4e7;
+        padding: 20px 24px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 14px;
+        font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+        margin: 16px 0;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* 角色提示横幅 - 改为毛玻璃 */
+    .role-banner {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px 24px;
+        margin-bottom: 36px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .role-banner .rb-icon {
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+
+    .role-banner .rb-text {
+        font-size: 14px;
+        color: var(--text-sub);
+    }
+
+    .role-banner .rb-text strong {
+        color: var(--text-main);
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+        .sidebar { transform: translateX(-100%); }
+        .sidebar.open { transform: translateX(0); }
+        .menu-toggle { display: flex; }
+        .overlay.show { display: block; }
+        .main-wrap { margin-left: 0; }
+        .top-header { padding: 72px 20px 14px; }
+        .top-header-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+        .top-header-title { justify-content: center; }
+        .role-tabs { justify-content: center; overflow-x: auto; }
+        .role-tab { padding: 7px 12px; font-size: 12px; }
+        .container { padding: 30px 24px 60px; }
+        h1 { font-size: 24px; }
+        h2 { font-size: 18px; }
+        .code-block { font-size: 12px; padding: 16px; }
+    }
+
+    /* 打印 */
+    @media print {
+        body { background: #fff; display: block; }
+        .sidebar, .menu-toggle, .overlay, .top-header { display: none !important; }
+        .main-wrap { margin-left: 0; }
+        .container { padding: 20px 0; }
+        .code-block { background: #f4f4f5; color: #111; border: 1px solid var(--border); }
+        .content-section { page-break-inside: avoid; }
+    }
+
+     .site-ambient {
+        position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+        background: linear-gradient(130deg, #f4f5f7 0%, #e4e7ec 50%, #eef0f3 100%);
+    }
+    
+    .ambient-orb {
+        position: absolute;
+        border-radius: 50%;
+    }
+
+    /* 右上角橘色泡泡 */
+    .ambient-orb-one {
+        top: -240px; right: -120px; width: 720px; height: 720px;
+        border: 1px solid rgba(255, 255, 255, .65);
+        background:
+            radial-gradient(circle at 32% 28%, rgba(252, 147, 41, 0.16), rgba(252, 147, 41, 0.05) 45%, transparent 68%),
+            radial-gradient(circle at 60% 65%, rgba(255, 255, 255, .42), transparent 70%);
+        box-shadow: inset 12px 0 60px rgba(255, 255, 255, .38), 0 40px 110px rgba(252, 147, 41, 0.06);
+        /* 加一点极缓慢的呼吸动画，泡泡会更有生命力 */
+        animation: float-orb 10s ease-in-out infinite alternate;
+    }
+
+    /* 左下角雾霾蓝泡泡 */
+    .ambient-orb-two {
+        bottom: -180px; left: -160px; width: 520px; height: 520px;
+        border: 1px solid rgba(255, 255, 255, .6);
+        background:
+            radial-gradient(circle at 40% 35%, rgba(70, 110, 190, 0.15), rgba(70, 110, 190, 0.04) 50%, transparent 70%);
+        box-shadow: inset 0 1px 2px #fff, 0 30px 80px rgba(70, 110, 190, 0.05);
+        animation: float-orb 12s ease-in-out infinite alternate-reverse;
+    }
+
+    /* 泡泡缓慢漂浮的动画 */
+    @keyframes float-orb {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(20px, 30px) scale(1.03); }
+    }
+    </style>
+</head>
+<body>
+
+<!-- 👇 环境光晕泡泡 👇 -->
+<div class="site-ambient">
+    <div class="ambient-orb ambient-orb-one"></div>
+    <div class="ambient-orb ambient-orb-two"></div>
+</div>
+
+<!-- 移动端菜单按钮 -->
+<button class="menu-toggle" id="menuToggle" aria-label="菜单">☰</button>
+<div class="overlay" id="overlay"></div>
+
+<!-- 侧边栏目录 -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo-wrap">
+        <img src="unizy-logo.png" alt="宇致软件">
+        <div class="manual-badge">用户使用手册</div>
+    </div>
+
+    <ul id="navList">
+        <li data-role="business"><a href="#chapter1" class="menu-link active">第1章 手册概述</a></li>
+        <li data-role="business"><a href="#chapter2" class="menu-link">第2章 系统入门</a></li>
+        <li data-role="business"><a href="#chapter3" class="menu-link">第3章 各业务模块操作指引</a></li>
+        <li data-role="business"><a href="#chapter4" class="menu-link">第4章 审批流程操作</a></li>
+        <li data-role="business"><a href="#chapter5" class="menu-link">第5章 报表与数据导出</a></li>
+        <li data-role="business"><a href="#chapter6" class="menu-link">第6章 Orbit助手常用指令参考</a></li>
+        <li data-role="business"><a href="#chapter7" class="menu-link">第7章 常见问题与故障排查FAQ</a></li>
+        <li data-role="business"><a href="#chapter8" class="menu-link">第8章 附录</a></li>
+
+        <li data-role="deploy"><a href="#deploy1" class="menu-link">D1 部署环境准备</a></li>
+        <li data-role="deploy"><a href="#deploy2" class="menu-link">D2 安装与初始化</a></li>
+        <li data-role="deploy"><a href="#deploy3" class="menu-link">D3 配置与启动</a></li>
+        <li data-role="deploy"><a href="#deploy4" class="menu-link">D4 常见部署问题</a></li>
+
+        <li data-role="guest"><a href="#guest1" class="menu-link">G1 产品是什么</a></li>
+        <li data-role="guest"><a href="#guest2" class="menu-link">G2 能解决什么问题</a></li>
+        <li data-role="guest"><a href="#guest3" class="menu-link">G3 核心亮点</a></li>
+    </ul>
+</div>
+
+<!-- 主内容区域 -->
+<div class="main-wrap" id="mainWrap">
+
+    <!-- ========== 顶部角色切换头部 ========== -->
+    <div class="top-header">
+        <div class="top-header-inner">
+            <div class="top-header-title">
+                <img src="unizy-logo.png" alt="宇致软件" class="th-logo">
+                <span class="th-divider"></span>
+                <span class="th-text">用户使用手册</span>
+            </div>
+            <div class="role-tabs">
+                <button class="role-tab active" data-role="business">
+                    <span class="role-icon">👤</span>
+                    业务使用人员
+                </button>
+                <button class="role-tab" data-role="deploy">
+                    <span class="role-icon">🛠️</span>
+                    部署/实施人员
+                </button>
+                <button class="role-tab" data-role="guest">
+                    <span class="role-icon">🧭</span>
+                    游客
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 内容容器 -->
+    <div class="container">
+
+        <!-- ================= 业务使用人员 ================= -->
+
+        <!-- 第1章 -->
+        <div id="chapter1" class="content-section show" data-role="business">
+            <h1>第1章 手册概述</h1>
+            <div class="role-banner">
+                <span class="rb-icon">👤</span>
+                <span class="rb-text">当前视角：<strong>业务使用人员</strong> · 侧重日常业务操作、审批与查询</span>
+            </div>
+            <h2>1.1 手册目的与适用对象</h2>
+            <p>本文档为星轨ORBIT普通业务用户操作手册，面向业务操作人员、部门主管、审批人员。</p>
+            <ul>
+                <li>本手册侧重业务使用操作；系统后台配置、权限、流程设置请查阅《系统管理员手册》。</li>
+            </ul>
+            <h2>1.2 产品简介</h2>
+            <p>星轨ORBIT是原生AI企业管理软件，覆盖采购、项目、车辆、人事、考勤、库存、薪酬等业务，内置Orbit助手AI对话入口，支持自然语言完成查询、统计、基础档案修改，简化传统ERP复杂菜单操作。</p>
+            <h2>1.3 术语说明</h2>
+            <ul>
+                <li><strong>Orbit助手</strong>：系统全局AI交互入口，底部输入框发起指令。</li>
+                <li><strong>快捷指令</strong>：首页预设高频任务，一键执行业务。</li>
+                <li><strong>AI任务编号</strong>：AI每一次操作生成唯一编号，用于追溯执行结果。</li>
+                <li><strong>主数据</strong>：供应商、员工、物料、仓库等基础档案信息。</li>
+            </ul>
+            <h2>1.4 安全注意事项</h2>
+            <ul>
+                <li>禁止共享账号密码，每个人使用自己独立账号登录。</li>
+                <li>Orbit助手同样受系统权限控制，没有权限的操作会直接拒绝。</li>
+                <li>AI返回的数据建议人工核对，重要业务以原始单据为准。</li>
+                <li>系统全部操作留痕，请勿执行越权业务操作。</li>
+                <li>体验申请所提交的联系方式仅用于业务沟通，系统将在 90 天内自动彻底清除记录，不对外公开。</li>
+            </ul>
+        </div>
+
+        <!-- 第2章 -->
+        <div id="chapter2" class="content-section" data-role="business">
+            <h1>第2章 系统入门</h1>
+            <h2>2.1 系统访问方式</h2>
+            <p>使用Chrome、Edge现代浏览器访问系统登录地址，不建议使用老旧浏览器。</p>
+            <h2>2.2 用户登录 / 退出登录 / 修改密码</h2>
+            <ol>
+                <li>输入账号密码完成登录；</li>
+                <li>暂不支持修改个人密码；</li>
+                <li>操作完成后建议退出登录；</li>
+                <li>点击左下角工号处，可退出登录。</li>
+            </ol>
+            <h2>2.3 Orbit助手（AI入口）使用入门 ⭐</h2>
+            <div class="tip-box">
+                <strong>提示：</strong>Orbit助手不等于万能操作，高风险业务依旧需要走审批流程。
+            </div>
+            <ul>
+                <li>页面中部为AI面板，目前只支持输入文字指令；</li>
+                <li>AI执行任务中可以看到任务执行状态；</li>
+                <li>最左侧快捷菜单，可以找到AI的历史对话；</li>
+                <li>没有权限的指令会返回“被拒绝”，需要联系管理员开通权限。</li>
+            </ul>
+            <h2>2.4 个人信息设置</h2>
+            <p>个人信息维护暂未开通，可通过员工管理-员工详情页进行修改。</p>
+        </div>
+
+        <!-- 第3章 -->
+        <div id="chapter3" class="content-section" data-role="business">
+            <h1>第3章 各业务模块操作指引</h1>
+            <p>每个模块通用逻辑：查看列表、查看详情、新建单据、查询筛选；也可以直接使用Orbit助手通过自然语言完成查询。</p>
+            <h3>3.1 首页工作台总览</h3>
+            <p>集中聚合待办事项、业务概览以及风险预警信息，关键业务事项与潜在经营风险集中可视化呈现，帮助管理人员快速掌握企业整体运营概况。</p>
+            <h3>3.2 供应商管理</h3>
+            <ul>
+                <li><strong>工作台：</strong>供应商全链路业务的统一汇总操作入口；</li>
+                <li><strong>供应商列表：</strong>负责维护供应商基础档案信息，支持基于供应商档案直接发起询价邀约；</li>
+                <li><strong>询价单：</strong>实现采购询价单据的创建与全周期跟踪。采购人员可新建询价单，录入采购需求并邀约合格供应商参与报价；系统完整记录询价单从草稿、已下发到定标的全状态流转，支持实时查看报价进度、查阅报价明细、多供应商横向比价，并完成最终定标工作。</li>
+            </ul>
+            <h3>3.3 项目管理</h3>
+            <p>实现项目全生命周期管控，完整覆盖立项、执行、验收、结算全业务环节。支持项目创建与基础档案维护、项目进度跟踪、业务状态流转管控；可与采购、合同、供应商等模块深度联动，做到项目全业务链路可查询、可追溯。</p>
+            <h3>3.4 车辆管理</h3>
+            <ul>
+                <li><strong>车辆监控：</strong>对车辆实时运行状态进行监控追踪。系统实时展示车辆在线 / 离线、行驶 / 停驶、行驶速度、行进方向、累计里程等状态；支持按车牌号、车队、部门多维度筛选车辆；针对超速、路线偏航、长时间怠速停驶等异常场景自动告警；留存车辆状态变更历史记录，支持回溯查询；</li>
+                <li><strong>地图监控：</strong>依托可视化地图实现车辆位置追踪。管理人员可直观查看车辆实时位置，回放历史行驶轨迹；支持电子围栏自定义配置、多车辆同屏监控；当车辆驶入 / 驶出电子围栏范围时自动触发告警，便于集中调度管控；</li>
+                <li><strong>车辆概览：</strong>车辆整体运营数据汇总看板。管理人员可查阅车辆总数量、在用、闲置、异常车辆等统计指标，展示车辆使用率、行驶里程、燃油消耗等核心运营数据，支持按部门、车队、时间范围筛选，为车辆调度与管理决策提供数据支撑；</li>
+                <li><strong>派车管理：</strong>规范化用车调度与派车审批流程。用车人员提交用车申请，填写用车时间、事由、目的地等信息；系统覆盖申请、审批、派车、还车完整业务流程，调度人员可完成车辆与司机分配，登记出车、还车相关信息，全流程操作留痕，支持数据查询与统计分析。</li>
+            </ul>
+            <h3>3.5 组织人事</h3>
+            <ul>
+                <li><strong>部门管理：</strong>用于企业组织架构搭建维护。管理员可完成部门的新增、编辑、查看、删除操作，维护部门名称、上级隶属、部门负责人、人员编制等信息；支持多层级组织架构可视化展示，部门档案与人员、角色、权限模块互联互通，为整个系统提供组织基础数据;</li>
+                <li><strong>岗位管理：</strong>搭建标准化岗位体系。管理员可实现岗位的新增、编辑、查看、删除，维护岗位名称、归属部门、职级、岗位职责等内容；岗位数据与部门、员工、角色权限联动，输出系统岗位基础主数据；</li>
+                <li><strong>员工管理：</strong>维护员工全量基础档案。管理员对员工信息进行新增、编辑、查看、删除，记录姓名、工号、所属部门、岗位、联系方式、入职时间等信息；员工档案关联部门、岗位、角色权限，作为系统人员核心基础数据源；</li>
+                <li><strong>合同管理：</strong>聚焦劳动合同全生命周期管理。管理员可完成劳动合同的新建、修改、查阅、续签、终止操作，维护合同编号、员工信息、合同类型、起止时间、薪资条款、签订状态等；设置合同到期自动提醒，合同档案联动员工、部门、岗位模块。</li>
+            </ul>
+            <h3>3.6 设备管理</h3>
+            <p>负责设备台账建立与设备全生命周期业务管理。管理员搭建完整设备台账，登记设备名称、编号、型号、归属部门、存放位置、使用状态等档案；支持设备领用、归还、维修保养、报废处置等业务办理；设备数据和部门、员工模块打通，沉淀设备基础主数据。</p>
+            <h3>3.7 计量单位</h3>
+            <p>系统基础主数据维护模块。管理员可对计量单位进行新增、编辑、查看、删除，维护单位名称、符号、换算关系、启用状态；支持多维度层级换算，计量单位同步对接物料、采购、库存模块，支撑全业务单元计量基准统一。</p>
+            <h3>3.8 考勤管理</h3>
+            <ul>
+                <li><strong>考勤概览：</strong>企业整体考勤数据汇总视图。管理人员可查看员工出勤、迟到、早退、请假、加班、缺勤等统计结果，支持按部门、岗位、时间筛选，输出考勤汇总报表，推送异常考勤提醒，为考勤管理与薪资核算提供数据依据；</li>
+                <li><strong>我的考勤：</strong>面向员工个人的考勤查询端口。员工可查阅个人每日出勤、迟到早退、请假加班、缺勤等全部记录，可按时间筛选查看汇总信息与异常明细，配套完整打卡明细，用于个人考勤核对与薪资校验；</li>
+                <li><strong>考勤设置：</strong>考勤业务规则配置中心。管理员自定义配置考勤班次、上下班时间、打卡规则、迟到早退判定标准、请假加班制度；支持针对不同部门、岗位配置差异化考勤方案，规则直接作用于考勤统计、薪资核算业务；</li>
+                <li><strong>考勤统计：</strong>批量处理考勤数据统计工作。管理员可按照部门、岗位、时间段多维度统计各类考勤结果，生成汇总报表与明细报表并支持导出，服务人事管理与薪资核算；</li>
+                <li><strong>考勤异常处理：</strong>处理各类考勤异常事项。管理员统一查看缺卡、迟到早退、旷工等异常记录；员工可线上提交补卡、考勤申诉；系统支持异常审批、结果归档、状态跟踪，处理结果自动同步考勤统计、薪资核算模块。</li>
+            </ul>
+            <h3>3.9 库存管理</h3>
+            <ul>
+                <li><strong>库存概览：</strong>库存整体运营情况汇总看板。管理人员查看库存总量、库存金额、品类分布、出入库趋势、库存预警等关键指标，支持仓库、品类、时间条件筛选，输出库存汇总报表，辅助库存管控与采购决策；</li>
+                <li><strong>物料管理：</strong>仓库管理：仓库档案信息维护。管理员对仓库进行新增、编辑、查阅、停用，维护仓库编码、名称、地址、负责人、存储条件、启用状态；仓库档案对接物料、库存、出入库业务；</li>
+                <li><strong>库存单据：</strong>出入库类业务单据管理。管理员可新建、编辑、查阅、审核各类库存单据，登记单据编号、业务类型、物料、数量、仓库、经办人、业务时间；覆盖入库、出库、调拨、盘点单据，单据数据作为库存变动的原始凭证；</li>
+                <li><strong>库存余额：</strong>实时库存数据展示。管理人员按仓库、物料、品类查询实时库存数量、库存金额、可用库存、锁定库存；支持筛选与导出，联动物料、仓库、库存单据，支撑库存管控与采购分析；</li>
+                <li><strong>库存流水：</strong>库存变动明细追溯。管理人员按物料、仓库、单据类型、时间查询每一笔出入库、调拨、盘点记录，展示变动前后库存数量、变动原因、关联单据、经办人，支持报表导出，用于库存核对与审计溯源。</li>
+            </ul>
+            <h3>3.10 薪酬管理</h3>
+            <ul>
+                <li><strong>工资单：</strong>薪资发放单据管理。管理员完成工资单的创建、查阅、审核，登记员工信息、薪资周期、基本工资、绩效、补贴、扣款、实发金额；支持工资单生成、审批、发放全流程留痕，数据对接考勤、劳动合同、员工档案，作为薪资发放依据；</li>
+                <li><strong>社保公积金：</strong>员工社保公积金业务管理。管理员维护员工社保、公积金缴纳基数、缴纳比例、缴纳金额；按月自动生成缴纳明细，记录缴纳状态，数据联动员工档案、工资单，支撑薪资核算与员工福利管理；</li>
+                <li><strong>薪资调整：</strong>调薪业务流程与档案管理。管理员发起调薪申请，填写员工信息、调整前后薪资、调整原因、生效时间；完整记录审批流程与调薪档案，数据同步员工、工资单、合同模块；</li>
+                <li><strong>薪资结构：</strong>薪资核算规则配置。管理员配置基本工资、岗位工资、绩效工资、各类补贴、扣款等薪资项目，定义各项目计算逻辑与计算公式，适配不同部门、岗位的差异化薪资方案；规则直接服务员工工资单核算，联动考勤数据。</li>
+            </ul>
+            <h3>3.11 费用管理</h3>
+            <ul>
+                <li><strong>报销单：</strong>报销单模块用于员工报销单据的创建与跟踪。员工可新建报销单，填写报销人、标题、事由、币种、承担对象；系统支持按流程完成审批，记录审批状态和审批意见；报销数据与员工、部门、工资单等模块联动，为费用核算和财务处理提供依据；</li>
+                <li><strong>票据：</strong>票据模块用于报销票据的录入与管理。员工可录入、修改、查看发票等票据信息，维护票据类型、金额、开票日期、发票号码、关联报销单等；系统支持票据查验、真伪校验和状态跟踪，票据数据与报销单、财务核算等模块联动，为费用报销和财务审核提供依据；</li>
+                <li><strong>待付款：</strong>待付款模块用于待付款项的管理与跟踪。财务人员可查看、筛选待付款单据，维护付款对象、付款金额、付款事由、到期时间、付款状态等信息；系统支持按供应商、部门、时间等维度查询，付款数据与采购、合同、报销等模块联动，为资金安排和付款执行提供依据。</li>
+            </ul>
+            <h3>3.12 系统管理</h3>
+            <ul>
+                <li><strong>权限管理：</strong>用户角色与访问权限配置。管理员完成角色新增、编辑、查阅、删除，配置角色对应权限，绑定用户与角色关系，精准管控用户对模块、菜单、按钮以及业务数据的访问范围；支持按部门、岗位批量分配权限，联动组织人事模块，筑牢系统权限底座；</li>
+                <li><strong>流程管理：</strong>审批与业务流程可视化配置。管理员自定义新增、编辑、启用、停用审批流程，设置流程节点、审批人、流转条件；可针对采购、合同、考勤、调薪等不同业务配置专属流程，流程规则赋能各业务模块审批流转。</li>
+            </ul>
+        </div>
+
+        <!-- 第4章 -->
+        <div id="chapter4" class="content-section" data-role="business">
+            <h1>第4章 审批流程操作</h1>
+            <h2>4.1 待办审批查看</h2>
+            <p>工作台集中展示所有待我审批的单据。</p>
+            <h2>4.2 审批操作</h2>
+            <ul>
+                <li>同意：审批通过，单据向下流转；</li>
+                <li>驳回：退回发起人，填写驳回意见；</li>
+                <li>转办：转交其他人员处理。</li>
+            </ul>
+            <h2>4.3 查看历史审批记录</h2>
+            <p>可查询自己发起、自己审批过的全部历史单据，查看完整流转记录。</p>
+            <h2>4.4 AI辅助发起申请</h2>
+            <p>部分业务可以直接使用Orbit助手发起申请，系统自动生成待审批任务，仍需要人工完成审批。</p>
+        </div>
+
+        <!-- 第5章 -->
+        <div id="chapter5" class="content-section" data-role="business">
+            <h1>第5章 报表与数据导出</h1>
+            <h2>5.1 系统预置报表查看</h2>
+            <p>各业务模块内置常用汇总报表，直接筛选条件查看。</p>
+            <h2>5.2 自定义报表</h2>
+            <p>支持自由搭配需要的字段，按需生成业务报表，满足个性化统计需求。</p>
+            <h2>5.3 数据导出</h2>
+            <p>报表、明细列表页面支持导出Excel，用于本地查阅。注意导出数据注意保密，不要随意转发内部业务数据。</p>
+        </div>
+
+        <!-- 第6章 -->
+        <div id="chapter6" class="content-section" data-role="business">
+            <h1>第6章 Orbit助手常用指令参考</h1>
+            <p>可以直接模仿下面句式输入到底部AI输入框：</p>
+            <h3>查询类示例</h3>
+            <div class="code-block">帮我查询本月考勤异常记录
+查看XX项目的整体进展
+查看A仓库当前库存余额</div>
+            <h3>修改基础档案类示例</h3>
+            <div class="code-block">把XX供应商的联系电话更新为13800138000</div>
+            <h3>汇总统计类示例</h3>
+            <div class="code-block">汇总本月部门领料数据
+汇总本月华东区考勤异常人员</div>
+            <div class="tip-box">
+                <strong>重要提示：</strong>AI只适合基础档案修改；调薪、新建项目等高风险业务，仍然需要走正式审批流程。
+            </div>
+        </div>
+
+        <!-- 第7章 -->
+        <div id="chapter7" class="content-section" data-role="business">
+            <h1>第7章 常见问题与故障排查FAQ</h1>
+            <h3>Q1：使用Orbit助手提示操作“被拒绝”？</h3>
+            <p>A：代表当前账号没有该操作权限，请联系系统管理员开通对应权限。</p>
+            <h3>Q2：AI返回的数据不对怎么办？</h3>
+            <p>A：以业务原始单据为准，可以重新下发指令，也可以手动进入页面核对明细。</p>
+            <h3>Q3：找不到某个菜单功能？</h3>
+            <p>A：① 使用Orbit助手直接完成业务；② 联系管理员确认账号是否分配菜单权限。</p>
+            <h3>Q4：提交申请，审批一直没有往下走？</h3>
+            <p>A：查看待办确认当前审批人；联系管理员检查审批流程配置。</p>
+            <h3>Q5：报表导出失败？</h3>
+            <p>A：检查网络；减少筛选的数据量；如果持续异常，联系内部技术支持。</p>
+        </div>
+
+        <!-- 第8章 -->
+        <div id="chapter8" class="content-section" data-role="business">
+            <h1>第8章 附录</h1>
+            <h2>附录A 常用页面入口</h2>
+            <ul>
+                <li>工作台：首页，处理待办与风险</li>
+                <li>Orbit助手：对话框支持全局访问</li>
+            </ul>
+            <h2>附录B 问题反馈方式</h2>
+            <p>系统BUG、功能问题，请联系内部系统管理员反馈。</p>
+            <h2>附录C 版本更新说明</h2>
+            <p>手册版本 V1.0，随系统迭代更新。</p>
+        </div>
+
+        <!-- ================= 部署/实施人员 ================= -->
+
+        <div id="deploy1" class="content-section" data-role="deploy">
+            <h1>D1 部署环境准备</h1>
+            <div class="role-banner">
+                <span class="rb-icon">🛠️</span>
+                <span class="rb-text">当前视角：<strong>部署/实施人员</strong> · 侧重环境搭建、系统部署与初始化</span>
+            </div>
+            <h2>D1.1 服务器要求</h2>
+            <p>星轨ORBIT支持在主流 Linux 服务器上部署，推荐配置如下：</p>
+            <ul>
+                <li>操作系统：Ubuntu 20.04+ / CentOS 7+</li>
+                <li>CPU：4 核及以上</li>
+                <li>内存：8GB 及以上</li>
+                <li>磁盘：100GB 及以上（视业务数据量调整）</li>
+            </ul>
+            <h2>D1.2 依赖组件</h2>
+            <ul>
+                <li>Python 运行环境（项目使用 uv 管理依赖）</li>
+                <li>数据库（MySQL 或 PostgreSQL 均可）</li>
+                <li>Redis（用于后台任务队列）</li>
+                <li>大模型 API Key（Orbit 的 AI 能力依赖大模型服务）</li>
+            </ul>
+            <div class="tip-box">
+                <strong>提示：</strong>请提前确认大模型服务可正常访问，否则 Orbit 助手将无法响应。
+            </div>
+        </div>
+
+        <div id="deploy2" class="content-section" data-role="deploy">
+            <h1>D2 安装与初始化</h1>
+            <h2>D2.1 获取代码</h2>
+            <p>从交付仓库拉取 Orbit 源码。</p>
+            <h2>D2.2 安装依赖</h2>
+            <div class="code-block">uv sync</div>
+            <h2>D2.3 初始化数据库</h2>
+            <div class="code-block">uv run orbit alembic upgrade</div>
+            <p>这一步会按迁移脚本建好所有表结构。</p>
+            <h2>D2.4 启动服务</h2>
+            <div class="code-block">uv run orbit main.py</div>
+            <p>启动后，系统会自动完成：注册应用 → 注册路由 → 加载插件 → 建表。</p>
+        </div>
+
+        <div id="deploy3" class="content-section" data-role="deploy">
+            <h1>D3 配置与启动</h1>
+            <h2>D3.1 环境变量配置</h2>
+            <p>按项目提供的配置模板，填写数据库连接、Redis 连接、大模型 API Key 等必要信息。</p>
+            <h2>D3.2 大模型配置</h2>
+            <p>在配置里填好大模型 API Key，确保 AI 能正常对话。</p>
+            <h2>D3.3 模块工具注册</h2>
+            <p>系统各模块的数据操作，是以“工具”的形式提供给 AI 调用的。模块通过 manifest 声明自己的工具能力，启动时会自动加载。</p>
+            <div class="tip-box">
+                <strong>验证：</strong>在 Orbit 对话框里输入“帮我查一下本月考勤异常记录”，如果它能去考勤模块把数据取回来，说明 AI 链路已经通了。
+            </div>
+        </div>
+
+        <div id="deploy4" class="content-section" data-role="deploy">
+            <h1>D4 常见部署问题</h1>
+            <h3>Q1：启动时报数据库连接错误？</h3>
+            <p>A：检查环境变量里的数据库配置，确认数据库已启动、账号密码正确。</p>
+            <h3>Q2：Orbit 助手不响应？</h3>
+            <p>A：检查大模型 API Key 是否配置正确，以及网络能否访问大模型服务。</p>
+            <h3>Q3：AI 说查不到数据？</h3>
+            <p>A：确认对应模块的工具已经注册，以及当前账号是否有该模块的查看权限。</p>
+            <h3>Q4：想加一个新模块？</h3>
+            <p>A：在 <code>modules/</code> 下新建目录，按推荐结构组织代码，写好 <code>manifest.py</code> 声明模型、仓储、工具和路由，启动时会自动加载。</p>
+        </div>
+
+        <!-- ================= 游客 ================= -->
+
+        <div id="guest1" class="content-section" data-role="guest">
+            <h1>G1 产品是什么</h1>
+            <div class="role-banner">
+                <span class="rb-icon">🧭</span>
+                <span class="rb-text">当前视角：<strong>游客</strong> · 初次了解星轨ORBIT，快速建立整体印象</span>
+            </div>
+            <h2>一句话定位</h2>
+            <div class="tip-box">
+                <strong>星轨ORBIT 是一个原生 AI 企业管理软件：说一句话，就能查改系统的数据。</strong>
+            </div>
+            <h2>它是什么</h2>
+            <p>星轨 ORBIT 是一套模块化企业管理系统，覆盖供应商、项目、车辆、人事、设备、考勤、库存、薪酬等企业日常业务。不同于传统管理软件，系统搭载原生 AI 助手 ——<strong>Orbit 助手</strong>。</p>
+            <p>Orbit 助手并非内嵌在单一模块中的附加功能，而是整套系统的统一智能中枢。您无需熟悉复杂菜单操作，仅需以自然语言下达指令，即可由它驱动系统完成各类业务工作。</p>
+        </div>
+
+        <div id="guest2" class="content-section" data-role="guest">
+            <h1>G2 能解决什么问题</h1>
+            <h2>传统 ERP 的痛点</h2>
+            <ul>
+                <li>找功能要记菜单路径，新人上手慢；</li>
+                <li>查数据要走“登录 → 找模块 → 点菜单 → 筛条件 → 导出”；</li>
+                <li>改一个字段要开表单、逐级保存；</li>
+                <li>跨模块取数要人自己来回拼。</li>
+            </ul>
+            <h2>星轨ORBIT 的做法</h2>
+            <ul>
+                <li>说一句话，它去底层查；</li>
+                <li>说一句话，它直接改（目前支持基础档案修改）；</li>
+                <li>首页预设高频任务快捷指令，一点就办；</li>
+                <li>跨模块数据它自己去取回来拼好。</li>
+            </ul>
+        </div>
+
+        <div id="guest3" class="content-section" data-role="guest">
+            <h1>G3 核心亮点</h1>
+            <h2>和传统 ERP 的区别</h2>
+            <ul>
+                <li><strong>找功能</strong>：从“记菜单路径”变成“说一句话”；</li>
+                <li><strong>查数据</strong>：从“点进去、筛选、导出”变成“说一句话，它去查”；</li>
+                <li><strong>改数据</strong>：从“开表单、逐级保存”变成“说一句话，它直接改”；</li>
+                <li><strong>跨模块</strong>：从“人自己来回拼”变成“它自己去各模块取”；</li>
+                <li><strong>AI 角色</strong>：从“外挂，只给建议”变成“原生，直接执行”；</li>
+                <li><strong>上手</strong>：从“要培训、背菜单”变成“有快捷指令，开口就用”。</li>
+            </ul>
+            <div class="tip-box">
+                <strong>核心区别一句话：</strong>传统 ERP 是“人去找系统办事”，星轨ORBIT 是“系统替人办事”。
+            </div>
+            <h2>技术亮点</h2>
+            <ul>
+                <li>系统像搭积木一样搭起来，能随业务慢慢长大；</li>
+                <li>AI 能真正调用系统里的功能，不是只会“说”；</li>
+                <li>简单的事走快路，复杂的事走稳路；</li>
+                <li>每一件事办完都留了记录，凭编号可追溯；</li>
+                <li>权限有把关，AI 的手能伸到哪，是权限说了算。</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// ================= 角色切换 =================
+const roleTabs = document.querySelectorAll('.role-tab');
+const navList = document.getElementById('navList');
+const allSections = document.querySelectorAll('.content-section');
+let currentRole = 'business';
+
+function switchRole(role) {
+    currentRole = role;
+
+    // 更新角色按钮激活态
+    roleTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.role === role);
+    });
+
+    // 显示/隐藏导航项
+    navList.querySelectorAll('li').forEach(li => {
+        li.style.display = (li.dataset.role === role) ? '' : 'none';
+    });
+
+    // 显示/隐藏章节
+    allSections.forEach(sec => {
+        sec.classList.remove('show');
+    });
+
+    // 找到该角色下的第一个章节并显示
+    const firstSection = document.querySelector(`.content-section[data-role="${role}"]`);
+    if (firstSection) {
+        firstSection.classList.add('show');
+    }
+
+    // 设置导航激活态
+    const links = navList.querySelectorAll('li[data-role="' + role + '"] .menu-link');
+    links.forEach(a => a.classList.remove('active'));
+    if (links.length > 0) {
+        links[0].classList.add('active');
+    }
+
+    // 回到顶部
+    window.scrollTo(0, 0);
+}
+
+roleTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        switchRole(tab.dataset.role);
+        if (window.innerWidth <= 1024) {
+            closeSidebar();
+        }
+    });
+});
+
+// ================= 章节切换 =================
+const menuLinks = document.querySelectorAll('.menu-link');
+const sections = document.querySelectorAll('.content-section');
+
+menuLinks.forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').replace('#', '');
+
+        menuLinks.forEach(a => a.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('show'));
+
+        this.classList.add('active');
+        document.getElementById(targetId).classList.add('show');
+
+        if (window.innerWidth <= 1024) {
+            closeSidebar();
+        }
+    });
+});
+
+// ================= 移动端侧边栏 =================
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+menuToggle.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) {
+        closeSidebar();
+        overlay.classList.remove('show');
+    }
+});
+
+// 初始化
+switchRole('business');
+</script>
+
+</body>
+</html>
