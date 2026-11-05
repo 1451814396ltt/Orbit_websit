@@ -232,7 +232,8 @@ if (mapDom && typeof echarts !== 'undefined') {
       maskColor: 'transparent'
     });
 
-    fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
+    // fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
+    fetch('./china.json')
       .then(res => res.json())
       .then(geoJson => {
         echarts.registerMap('china', geoJson);
