@@ -586,8 +586,8 @@ img, svg { max-width: 100%; }
 }
 .orbit-rings .ring-1 {
   /*width: 320px; height: 320px;*/
-  width: 550px;
-  height: 550px;
+  width: 500px;
+  height: 500px;
   /*border: 1px dashed rgba(255, 126, 54, 0.3);*/
   /*background: radial-gradient(circle, rgba(255, 126, 54, 0.08) 0%, rgba(255, 255, 255, 0) 70%);*/
   border: 2px dashed rgba(255, 126, 54, 0.3);
@@ -597,14 +597,6 @@ img, svg { max-width: 100%; }
   will-change: transform;
   box-shadow: 0 0 30px rgba(255, 126, 54, 0.1) inset, 0 0 30px rgba(255, 126, 54, 0.1);  /* 新增 */
 }
-/*.orbit-rings .ring-2 {*/
-/*  width: 890px; height: 890px;*/
-/*  !*width: 600px; height: 600px;*!*/
-/*  border: 1px solid rgba(0, 0, 0, 0.02);*/
-/*  !*background: rgba(255, 255, 255, 0.3);*!*/
-/*  background: rgba(255, 255, 255, 0.3);*/
-/*  box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.5);*/
-/*}*/
 
 .scene-name {
   font-size: 11px !important;
@@ -658,7 +650,7 @@ img, svg { max-width: 100%; }
 .orbit-core .core-logo {
   display: block;
   width: auto;
-  height: 30px;
+  height: 20px;
 }
 .orbit-core .core-title {
   font-size: 30px;           /* 放大中文字号 */
@@ -1789,45 +1781,71 @@ img, svg { max-width: 100%; }
 
 /* ---------- ≤ 1024px：平板横屏 / 小笔记本 ---------- */
 @media (max-width: 1024px) {
-  :root {
-    --gutter: 24px;
-    --section-gap: 80px;
-  }
+:root {
+  --gutter: 24px;
+  --section-gap: 80px;
+}
 
-  .section-shell,
-  .footer-shell { padding-left: var(--gutter); padding-right: var(--gutter); }
+.section-shell,
+.footer-shell { padding-left: var(--gutter); padding-right: var(--gutter); }
 
-  /* 页头 */
-  .nav-shell { gap: 20px; padding: 0 var(--gutter); font-size: 15px; }
-  .logo-unizy { height: 44px; }
-  .logo-orbit { height: 22px; }
-  .brand { gap: 10px; }
-  .nav-shell nav { gap: 24px; }
-  .nav-cta { padding: 9px 18px; font-size: 14px; }
+/* 页头 */
+.nav-shell { gap: 20px; padding: 0 var(--gutter); font-size: 15px; }
+.logo-unizy { height: 44px; }
+.logo-orbit { height: 22px; }
+.brand { gap: 10px; }
+.nav-shell nav { gap: 24px; }
+.nav-cta { padding: 9px 18px; font-size: 14px; }
 
-  /* Hero：单列，仪表盘取消 3D 倾斜（同时减少合成开销） */
-  .hero { grid-template-columns: 1fr; gap: 40px; min-height: auto; padding-bottom: 60px; }
-  .hero-copy h1 { font-size: 48px; }
-  .hero-visual { height: 600px; }
-  .dashboard-mockup { top: 0; transform: none; }
-  .chat-left { left: 16px; bottom: 0; }
-  .data-flow-canvas { inset: -6% 0; }
+/* Hero：单列，仪表盘取消 3D 倾斜（同时减少合成开销） */
+.hero { grid-template-columns: 1fr; gap: 40px; min-height: auto; padding-bottom: 60px; }
+.hero-lead {
+  font-size: 18px; /* 从原来的默认大小放大到 18px */
+  line-height: 1.8;
+}
+.hero-copy h1 { font-size: 60px; }
+ .hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 让块级元素居中 */
+  text-align: center;  /* 让文字居中 */
+  padding-left: 0;     /* 清除之前为了往右靠加的左边距 */
+  margin: 0 auto;
+}
 
-  /* 区块标题 */
-  .divider-text { font-size: 30px; }
+.hero-visual { height: 600px; }
+.dashboard-mockup { top: 0; transform: none; }
+.chat-left { left: 16px; bottom: 0; }
+.data-flow-canvas { inset: -6% 0; }
 
-  /* 产品能力：缩小卡片与核心圆 */
-  .island-solutions-section { padding-top: 48px; contain-intrinsic-size: auto 820px; }
-  .orbit-highlight-wrapper { height: 600px;}
-  .node-card { width: 260px; padding: 18px 20px; }
-  .node-desc { font-size: 12.5px; }
-  .node-l2 { left: 0; }
-  .node-r2 { right: 0; }
-  .orbit-core { width: 160px; height: 160px; border-width: 5px; }
-  .orbit-core .core-title { font-size: 20px; }
-  .orbit-rings .ring-1 { width: 260px; height: 260px; }
-  .orbit-rings .ring-2 { width: 480px; height: 480px; }
-  .orbit-rings .ring-3 { width: 820px; height: 820px; }
+/* 区块标题 */
+.divider-text { font-size: 30px; }
+
+/* 产品能力：缩小卡片与核心圆 */
+.island-solutions-section { padding-top: 48px; contain-intrinsic-size: auto 820px; }
+.orbit-highlight-wrapper { height: 600px; padding-left: 30px;  padding-right: 30px;}
+.node-card { width: 260px; padding: 18px 20px;}
+.node-desc { font-size: 12.5px; }
+/* 左侧卡片往里靠 */
+  .node-l1 { left: 20px; }
+  .node-l2 { left: 40px; } /* 中间那张更往里一点 */
+  .node-l3 { left: 20px; }
+
+  /* 右侧卡片往里靠 */
+  .node-r1 { right: 20px; }
+  .node-r2 { right: 40px; } /* 中间那张更往里一点 */
+  .node-r3 { right: 20px; }
+.orbit-core { width: 260px; height: 260px; border-width: 6px; }
+.orbit-core .core-title { font-size: 28px; margin-bottom: 4px;}
+.orbit-rings .ring-1 { width: 260px; height: 260px; }
+.orbit-rings .ring-2 { width: 480px; height: 480px; }
+.orbit-rings .ring-3 { width: 820px; height: 820px; }
+.orbit-core .logo-orbit {height: 22px;margin-bottom: 4px;}
+.orbit-core .core-content {font-size: 11px;letter-spacing: 4px;}
+.orbit-rings .ring-1 {
+  width: 320px;
+  height: 320px;
+}
 
 
   /* 滚动条 */
@@ -1865,98 +1883,166 @@ img, svg { max-width: 100%; }
   .nav-shell nav { display: none; }
 
   /* Hero */
-  .hero { gap: 32px; padding-top: 24px; padding-bottom: 48px; }
-  .hero-copy h1 { font-size: 40px; letter-spacing: -1.5px; }
-  .hero-copy h1 .keep-together { padding-top: 12px; }
-  .hero-lead { margin-bottom: 32px; font-size: 16px; }
-  .hero-lead br { display: none; }
+.hero { gap: 32px; padding-top: 24px; padding-bottom: 48px; }
+.hero-copy {
+text-align: center; /* 文字水平居中 */
+display: flex;
+flex-direction: column;
+align-items: center; /* 让内部的块级元素（如按钮组、标签）居中 */
+padding-left: 0; /* 去掉之前为了往右推加的左内边距 */
+}
+.hero-copy .button-row {
+justify-content: center;
+width: 100%;
+}
+.hero-copy h1 { text-align: center; font-size: 40px; letter-spacing: -1.5px; }
+.hero-copy h1 .keep-together { padding-top: 12px; }
+.hero-lead { text-align: center; max-width: 90%; margin-bottom: 32px; font-size: 16px; }
+.hero-lead br { display: none; }
 
-  /* 仪表盘改为文档流排列 */
-  .hero-visual { height: auto; perspective: none; }
-  .data-flow-canvas { display: none; }
-  .dashboard-mockup {
-    position: relative;
-    top: auto; left: auto;
-    max-width: none;
-    height: auto;
-    border-radius: 18px;
-  }
-  .dash-sidebar { display: none; }
-  .dash-content { padding: 20px; }
-  .dash-header { margin-bottom: 18px; font-size: 15px; }
-  .dash-card { height: 130px; }
-  .ai-input-wrapper input { font-size: 16px; } /* ≥16px 防止 iOS 聚焦时页面放大 */
+/* 仪表盘改为文档流排列 */
+.hero-visual { height: auto; perspective: none; }
+.data-flow-canvas { display: none; }
+.dashboard-mockup {
+position: relative;
+top: auto; left: auto;
+max-width: none;
+height: auto;
+border-radius: 18px;
+}
+.dash-sidebar { display: none; }
+.dash-content { padding: 20px; }
+.dash-header { margin-bottom: 18px; font-size: 15px; }
+.dash-card { height: 130px; }
+.ai-input-wrapper input { font-size: 16px; } /* ≥16px 防止 iOS 聚焦时页面放大 */
 
-  .floating-chat { position: relative; width: 100%; margin-top: 16px; }
-  .chat-left { left: auto; bottom: auto; transform: none; }
-  .chat-body { min-height: 64px; max-height: 180px; }
+.floating-chat { position: relative; width: 100%; margin-top: 16px; }
+.chat-left { left: auto; bottom: auto; transform: none; }
+.chat-body { min-height: 64px; max-height: 180px; }
 
-  /* 区块标题 */
-  .section-divider { gap: 14px; margin-bottom: 28px; }
-  .divider-text { font-size: 24px; }
+/* 区块标题 */
+.section-divider { gap: 14px; margin-bottom: 28px; }
+.divider-text { font-size: 24px; }
 
-  /* 产品能力：星盘改为两列卡片网格 */
-  .island-solutions-section { padding-top: 40px; contain-intrinsic-size: auto 1000px; }
-  .orbit-highlight-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px 20px;
-    height: auto;
-  }
-  .orbit-rings,
-  .orbit-lines { display: none; }
-  .orbit-highlight-wrapper .orbit-core {
-    position: relative;
-    top: auto; left: auto;
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: 130px; height: 130px;
-    border-width: 4px;
-    transform: none;
-  }
-  .orbit-core .core-title { font-size: 18px; }
-  .orbit-highlight-wrapper .orbit-node {
-    position: relative;
-    inset: auto;
-    transform: none;
-  }
-  .node-card { width: 100%; height: 100%; }
-  .node-desc { font-size: 13px; }
+/* 产品能力：星盘改为单列或两列卡片网格 (768px 适配) */
+.island-solutions-section { padding-top: 40px; contain-intrinsic-size: auto 1000px; }
+.orbit-highlight-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px 20px;
+  height: auto;
+  padding: 0 20px;
+  position: relative;
+}
+.orbit-rings {
+  display: block;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  /*margin-bottom: 100px;*/
+  transform: translate(-50%, -50%) scale(0.5);
+}
+.orbit-rings .ring-1 { width: 500px; height: 500px; }
+.orbit-lines { display: none; }
 
-  /* 滚动条 */
-  .marquee-section {
-    padding: 16px 0;
-    margin-bottom: 30px;
-    /* 稍微扩大两端的渐隐范围，防止小屏幕上看不清边缘文字 */
-    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-  }
+/* 核心球体适配 768px */
+.orbit-highlight-wrapper .orbit-core {
+  position: relative;
+  top: auto; left: auto;
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 200px;
+  height: 200px;
+  border-width: 5px;
+  aspect-ratio: 1 / 1;
+  transform: none;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .marquee-track {
-    gap: 24px;
-    padding-left: 24px;
-    animation-duration: 18s; /* 屏幕变窄，加快一点速度，不然等半天不走完 */
-  }
+/* 👇 同步缩小球体内部元素的尺寸 👇 */
+.orbit-core .logo-orbit {
+  height: 20px;
+  margin-bottom: 6px;
+}
 
-  .marquee-track span {
-    font-size: 13px;
-  }
+.orbit-core .core-title {
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
 
-  /* 圆点稍微变小 */
-  .marquee-track span::before {
-    width: 5px;
-    height: 5px;
-    margin-right: 8px;
-  }
+.orbit-core .core-content {
+  font-size: 10px;
+  letter-spacing: 4px;
+}
 
-  /* 适配行业 */
-  .industry-header-wrap { margin-bottom: 36px; }
-  .industry-desc { font-size: 15px; }
-  .industry-desc br { display: none; }
-  .industry-grid { gap: 16px; }
-  .industry-card { padding: 26px 22px; }
-  .industry-icon { width: 50px; height: 50px; margin-bottom: 18px; border-radius: 14px; }
-  .industry-card h3 { font-size: 18px; }
+/* 卡片节点适配 768px */
+.orbit-highlight-wrapper .orbit-node {
+  position: relative;
+  inset: auto;
+  transform: none;
+  width: 100%;
+}
+.node-card {
+  width: 100%;
+  height: 100%;
+  padding: 24px 20px;
+  border-radius: 16px;
+}
+.node-num {
+  top: -14px;
+  left: 20px;
+  font-size: 13px;
+  padding: 2px 12px;
+}
+
+.node-title {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.node-desc {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+/* 滚动条 */
+.marquee-section {
+  padding: 16px 0;
+  margin-bottom: 30px;
+  /* 稍微扩大两端的渐隐范围，防止小屏幕上看不清边缘文字 */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.marquee-track {
+  gap: 24px;
+  padding-left: 24px;
+  animation-duration: 18s; /* 屏幕变窄，加快一点速度，不然等半天不走完 */
+}
+
+.marquee-track span {
+  font-size: 13px;
+}
+
+/* 圆点稍微变小 */
+.marquee-track span::before {
+  width: 5px;
+  height: 5px;
+  margin-right: 8px;
+}
+
+/* 适配行业 */
+.industry-header-wrap { margin-bottom: 36px; }
+.industry-desc { font-size: 15px; }
+.industry-desc br { display: none; }
+.industry-grid { gap: 16px; }
+.industry-card { padding: 26px 22px; }
+.industry-icon { width: 50px; height: 50px; margin-bottom: 18px; border-radius: 14px; }
+.industry-card h3 { font-size: 18px; }
 
   /* 服务区域 */
   .service-map-card { gap: 28px; padding: 24px; border-radius: 24px; }
@@ -1990,143 +2076,189 @@ img, svg { max-width: 100%; }
 
 /* ---------- ≤ 480px：手机 ---------- */
 @media (max-width: 480px) {
-  :root {
-    --header-h: 56px;
-    --gutter: 16px;
-    --section-gap: 48px;
-  }
+:root {
+  --header-h: 56px;
+  --gutter: 16px;
+  --section-gap: 48px;
+}
 
-  /* 页头 */
-  .nav-shell { gap: 12px; }
-  .brand { gap: 8px; }
-  .logo-unizy { height: 38px; }
-  .logo-orbit { height: 19px; }
-  .brand-divider { height: 18px; }
-  .nav-cta { padding: 8px 16px; font-size: 13px; }
+/* 页头 */
+.nav-shell { gap: 12px; }
+.brand { gap: 8px; }
+.logo-unizy { height: 38px; }
+.logo-orbit { height: 19px; }
+.brand-divider { height: 18px; }
+.nav-cta { padding: 8px 16px; font-size: 13px; }
 
-  /* Hero */
-  .hero { gap: 28px; padding-top: 16px; padding-bottom: 40px; }
-  .hero-copy h1 { margin-bottom: 18px; font-size: 32px; letter-spacing: -1px; }
-  .hero-copy h1 .keep-together { padding-top: 8px; font-size: 0.72em; white-space: normal; }
-  .hero-lead { margin-bottom: 28px; font-size: 15px; }
-  .button-row { gap: 12px; }
-  .button-row .button { flex: 1; padding: 12px 16px; font-size: 14px; }
+/* Hero */
+.hero { gap: 28px; padding-top: 16px; padding-bottom: 40px; }
+.hero-copy h1 { margin-bottom: 18px; font-size: 38px; letter-spacing: -1px; }
+.hero-copy h1 .keep-together { padding-top: 8px; font-size: 0.72em; white-space: normal; }
+.hero-lead { margin-bottom: 28px; font-size: 15px; }
 
-  /* 仪表盘 */
-  .dashboard-mockup { border-radius: 16px; }
-  .dash-content { padding: 16px 14px; }
-  .dash-header { margin-bottom: 14px; }
-  .ai-interaction-area { margin-bottom: 16px; }
-  .ai-input-wrapper { padding: 6px 8px 6px 10px; }
-  .ai-input-wrapper button { padding: 6px 12px; }
-  .quick-prompt { padding: 4px 10px; }
-  .dash-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .dash-card { height: 112px; padding: 12px; border-radius: 10px; }
-  .dash-card span { margin-bottom: 8px; font-size: 11px; }
-  .dash-val { font-size: 13px; }
-  .chart-container,
-  .chart-line-container { height: 34px; margin-bottom: 6px; }
-  .agent-sphere { width: 48px; height: 48px; }
-  .agent-sphere .core { width: 20px; height: 20px; }
-  .floating-chat { padding: 14px; gap: 10px; }
+.button-row { gap: 12px; }
+.button-row .button { flex: 1; padding: 12px 16px; font-size: 14px; }
 
-  /* 区块标题 */
-  .section-divider { gap: 10px; margin-bottom: 24px; }
-  .divider-line { min-width: 16px; }
-  .divider-text { font-size: 20px; white-space: normal; text-align: center; }
+/* 仪表盘 */
+.dashboard-mockup { border-radius: 16px; }
+.dash-content { padding: 16px 14px; }
+.dash-header { margin-bottom: 14px; }
+.ai-interaction-area { margin-bottom: 16px; }
+.ai-input-wrapper { padding: 6px 8px 6px 10px; }
+.ai-input-wrapper button { padding: 6px 12px; }
+.quick-prompt { padding: 4px 10px; }
+.dash-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.dash-card { height: 112px; padding: 12px; border-radius: 10px; }
+.dash-card span { margin-bottom: 8px; font-size: 11px; }
+.dash-val { font-size: 13px; }
+.chart-container,
+.chart-line-container { height: 34px; margin-bottom: 6px; }
+.agent-sphere { width: 48px; height: 48px; }
+.agent-sphere .core { width: 20px; height: 20px; }
+.floating-chat { padding: 14px; gap: 10px; }
 
-  /* 产品能力：单列 */
-  .island-solutions-section { padding-top: 32px; contain-intrinsic-size: auto 1500px; }
-  .orbit-highlight-wrapper { grid-template-columns: 1fr; gap: 26px; }
-  .orbit-highlight-wrapper .orbit-core { width: 110px; height: 110px; }
-  .orbit-core .core-title { font-size: 16px; letter-spacing: 1px; }
-  .node-card { padding: 18px; }
+/* 区块标题 */
+.section-divider { gap: 10px; margin-bottom: 24px; }
+.divider-line { min-width: 16px; }
+.divider-text { font-size: 20px; white-space: normal; text-align: center; }
 
-  /* 滚动条 */
-  .marquee-section {
-    padding: 12px 0;
-    margin-bottom: 24px;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-  }
+/* 产品能力：单列 */
+.island-solutions-section { padding-top: 32px; contain-intrinsic-size: auto 1500px; }
+.orbit-highlight-wrapper { grid-template-columns: 1fr; gap: 26px; padding: 0 16px; }
 
-  .marquee-track {
-    gap: 18px;
-    padding-left: 18px;
-    animation-duration: 15s; /* 手机端滚得更快一点，抓眼球 */
-  }
+/* 👇 核心球体及内部元素适配 👇 */
+.orbit-highlight-wrapper .orbit-core {
+  width: 150px;
+  height: 150px ;
+  border-width: 4px;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .marquee-track span {
-    font-size: 12px; /* 最小字号，保证手机上好读 */
-    color: #666; /* 稍微调深一点颜色，增加对比度 */
-  }
+/*.orbit-core .logo-orbit {*/
+/*  height: 1px !important;       !* 强制高度 *!*/
+/*  width: auto !important;        !* 宽度自动等比缩放 *!*/
+/*  max-width: 60% !important;     !* 绝对不超过球体宽度的 60% *!*/
+/*  display: block !important;     !* 防止被拉伸成块级元素 *!*/
+/*  margin: 4px 0;*/
+/*}*/
 
-  .marquee-track strong {
-    font-size: 12.5px; /* 加粗部分微微大一点点，形成层次 */
-  }
+.orbit-core .core-title {
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
 
-  /* 适配行业：单列 */
-  .industry-header-wrap { margin-bottom: 28px; }
-  .industry-desc { font-size: 14px; }
-  .industry-global-btn { width: 100%; padding: 14px 20px; font-size: 15px; }
-  .industry-grid { grid-template-columns: 1fr; gap: 12px; }
-  .industry-card { padding: 22px 18px; border-radius: 16px; }
-  .industry-card:hover { transform: translateY(-4px); }
-  .industry-icon { width: 46px; height: 46px; margin-bottom: 14px; }
-  .industry-icon svg { width: 24px; height: 24px; }
-  .industry-card h3 { margin-bottom: 8px; font-size: 17px; }
-  .industry-card p { font-size: 13.5px; }
+.orbit-core .core-content {
+  font-size: 8px;
+  letter-spacing: 3px;
+}
 
-  /* 服务区域 */
-  .section-support { padding-top: 12px; }
-  .service-map-card { gap: 24px; padding: 18px; border-radius: 20px; }
-  .service-map-visual { min-height: 260px; border-radius: 12px; }
-  #service-map-echarts { height: 260px !important; }
-  .service-map-info { gap: 18px; }
-  .service-map-badge { padding: 6px 12px; font-size: 12px; }
-  .service-map-title { font-size: 24px; }
-  .service-map-desc { font-size: 14px; }
-  .service-region-tags { gap: 8px; }
-  .service-tag { padding: 6px 12px; font-size: 12px; }
-  .service-map-stats { justify-content: space-between; gap: 12px; margin-top: 4px; padding-top: 20px; }
-  .stat-num { font-size: 28px; }
-  .stat-sub { font-size: 15px; }
-  .stat-label { font-size: 12px; }
+.orbit-highlight-wrapper .orbit-core .orbit-rings { transform: translate(-50%, -50%) scale(0.35); }
 
-  .services-sub-section { margin-top: 32px; }
-  .services-grid { grid-template-columns: 1fr; gap: 12px; }
-  .service-card { padding: 22px 18px; border-radius: 16px; }
-  .service-card h3 { font-size: 17px; }
-  .service-card p { font-size: 14px; }
+/* 卡片节点适配 */
+.node-card { padding: 20px 18px; }
+.node-title { font-size: 16px; }
+.node-desc { font-size: 13px; }
+.orbit-rings {
+  display: block;
+  position: absolute;
+  top: 7.5%;
+  left: 50%;
+  /*margin-bottom: 100px;*/
+  transform: translate(-50%, -50%) scale(0.5);
+}
+.orbit-rings .ring-1 { width: 380px; height: 380px; }
 
-  /* 数据安全 */
-  .security-container { gap: 28px; padding: 28px 18px; border-radius: 20px; }
-  .security-title { font-size: 28px; letter-spacing: 0.5px; }
-  .security-desc { font-size: 14px; }
-  .security-features { grid-template-columns: 1fr; gap: 12px; }
-  .security-card { padding: 20px 18px; border-radius: 16px; }
-  .security-card.highlight-card { flex-direction: column; gap: 16px; }
-  .s-card-icon { width: 44px; height: 44px; }
-  .s-card-text h4 { font-size: 16px; }
+/* 滚动条 */
+.marquee-section {
+  padding: 12px 0;
+  margin-bottom: 24px;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
 
-  /* 页脚：单列 */
-  .site-footer { margin-top: 32px; padding: 48px 0 32px; }
-  .footer-top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 32px; }
-  .footer-logo-link { margin-bottom: 16px; }
-  .footer-logo-unizy { height: 40px; }
-  .footer-desc { font-size: 14px; }
-  .footer-links h4,
-  .footer-contact h4 { margin-bottom: 16px; font-size: 14px; }
-  .footer-links ul { gap: 10px; }
-  .footer-links ul a,
-  .footer-email { font-size: 15px; }
-  .footer-phone { font-size: 21px; }
-  .footer-cta { margin-top: 8px; padding: 10px 20px; font-size: 14px; }
-  .footer-bottom { font-size: 13px; }
+.marquee-track {
+  gap: 18px;
+  padding-left: 18px;
+  animation-duration: 15s; /* 手机端滚得更快一点，抓眼球 */
+}
 
-  /* 弹窗 */
-  .trial-dialog { width: calc(100vw - 24px); padding: 24px 18px; border-radius: 20px; }
-  .dialog-close { top: 14px; right: 14px; }
-  .trial-dialog h2 { padding-right: 32px; font-size: 21px; }
-  .trial-form { gap: 12px; }
+.marquee-track span {
+  font-size: 12px; /* 最小字号，保证手机上好读 */
+  color: #666; /* 稍微调深一点颜色，增加对比度 */
+}
+
+.marquee-track strong {
+  font-size: 12.5px; /* 加粗部分微微大一点点，形成层次 */
+}
+
+/* 适配行业：单列 */
+.industry-header-wrap { margin-bottom: 28px; }
+.industry-desc { font-size: 14px; }
+.industry-global-btn { width: 100%; padding: 14px 20px; font-size: 15px; }
+.industry-grid { grid-template-columns: 1fr; gap: 12px; }
+.industry-card { padding: 22px 18px; border-radius: 16px; }
+.industry-card:hover { transform: translateY(-4px); }
+.industry-icon { width: 46px; height: 46px; margin-bottom: 14px; }
+.industry-icon svg { width: 24px; height: 24px; }
+.industry-card h3 { margin-bottom: 8px; font-size: 17px; }
+.industry-card p { font-size: 13.5px; }
+
+/* 服务区域 */
+.section-support { padding-top: 12px; }
+.service-map-card { gap: 24px; padding: 18px; border-radius: 20px; }
+.service-map-visual { min-height: 260px; border-radius: 12px; }
+#service-map-echarts { height: 260px !important; }
+.service-map-info { gap: 18px; }
+.service-map-badge { padding: 6px 12px; font-size: 12px; }
+.service-map-title { font-size: 24px; }
+.service-map-desc { font-size: 14px; }
+.service-region-tags { gap: 8px; }
+.service-tag { padding: 6px 12px; font-size: 12px; }
+.service-map-stats { justify-content: space-between; gap: 12px; margin-top: 4px; padding-top: 20px; }
+.stat-num { font-size: 28px; }
+.stat-sub { font-size: 15px; }
+.stat-label { font-size: 12px; }
+
+.services-sub-section { margin-top: 32px; }
+.services-grid { grid-template-columns: 1fr; gap: 12px; }
+.service-card { padding: 22px 18px; border-radius: 16px; }
+.service-card h3 { font-size: 17px; }
+.service-card p { font-size: 14px; }
+
+/* 数据安全 */
+.security-container { gap: 28px; padding: 28px 18px; border-radius: 20px; }
+.security-title { font-size: 28px; letter-spacing: 0.5px; }
+.security-desc { font-size: 14px; }
+.security-features { grid-template-columns: 1fr; gap: 12px; }
+.security-card { padding: 20px 18px; border-radius: 16px; }
+.security-card.highlight-card { flex-direction: column; gap: 16px; }
+.s-card-icon { width: 44px; height: 44px; }
+.s-card-text h4 { font-size: 16px; }
+
+/* 页脚：单列 */
+.site-footer { margin-top: 32px; padding: 48px 0 32px; }
+.footer-top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 32px; }
+.footer-logo-link { margin-bottom: 16px; }
+.footer-logo-unizy { height: 40px; }
+.footer-desc { font-size: 14px; }
+.footer-links h4,
+.footer-contact h4 { margin-bottom: 16px; font-size: 14px; }
+.footer-links ul { gap: 10px; }
+.footer-links ul a,
+.footer-email { font-size: 15px; }
+.footer-phone { font-size: 21px; }
+.footer-cta { margin-top: 8px; padding: 10px 20px; font-size: 14px; }
+.footer-bottom { font-size: 13px; }
+
+/* 弹窗 */
+.trial-dialog { width: calc(100vw - 24px); padding: 24px 18px; border-radius: 20px; }
+.dialog-close { top: 14px; right: 14px; }
+.trial-dialog h2 { padding-right: 32px; font-size: 21px; }
+.trial-form { gap: 12px; }
 }
