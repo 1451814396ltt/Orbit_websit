@@ -135,8 +135,15 @@ img, svg { max-width: 100%; }
   transition: transform .2s, background-color .2s, box-shadow .2s;
 }
 .button-primary:hover { transform: translateY(-2px); background: #2a2a2a; }
-
 .button-row { display: flex; gap: 16px; }
+.privacy-notice {
+  margin: 12px 0 0;       /* 距离上方按钮的间距 */
+  font-size: 11px;        /* 字号极小 */
+  line-height: 1.5;       /* 行高，保证两行文字不挤在一起 */
+  color: #99a3ad;         /* 浅灰色，视觉上后退，不抢戏 */
+  text-align: justify;    /* 两端对齐，两边看起来比较整齐 */
+  text-align-last: center;/* 最后一行居中，配合表单的居中风格 */
+}
 
 
 /* =========================================================
@@ -1384,10 +1391,9 @@ img, svg { max-width: 100%; }
    10. 留资弹窗
    ========================================================= */
 .trial-dialog {
-  width: min(460px, calc(100vw - 32px));
-  max-height: calc(100vh - 48px);
+  width: min(560px, calc(100vw - 32px));
   max-height: calc(100dvh - 48px);
-  padding: 28px;
+  padding: 24px 32px;
   border: none;
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.95);
