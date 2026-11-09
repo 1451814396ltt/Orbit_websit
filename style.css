@@ -592,15 +592,10 @@ img, svg { max-width: 100%; }
   transform: translate(-50%, -50%);
 }
 .orbit-rings .ring-1 {
-  /*width: 320px; height: 320px;*/
   width: 500px;
   height: 500px;
-  /*border: 1px dashed rgba(255, 126, 54, 0.3);*/
-  /*background: radial-gradient(circle, rgba(255, 126, 54, 0.08) 0%, rgba(255, 255, 255, 0) 70%);*/
   border: 2px dashed rgba(255, 126, 54, 0.3);
   background: transparent;
-  /*animation: spin-center 40s linear infinite;*/
-  animation: spin-slow 40s linear infinite; /* 缓慢旋转 */
   will-change: transform;
   box-shadow: 0 0 30px rgba(255, 126, 54, 0.1) inset, 0 0 30px rgba(255, 126, 54, 0.1);  /* 新增 */
 }
@@ -612,8 +607,6 @@ img, svg { max-width: 100%; }
   letter-spacing: 1px !important;
 }
 .orbit-rings .ring-3 {
-  /*width: 1000px; height: 1000px;*/
-  /*border: 1px dashed rgba(0, 0, 0, 0.04);*/
   width: 1270px;
   height: 1270px;
   border: 1px dashed rgba(0, 0, 0, 0.05);
@@ -756,7 +749,7 @@ img, svg { max-width: 100%; }
   );
 
   /* 应用扩散动画 */
-  animation: white-pulse 5s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+  animation: white-pulse 3s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
 }
 
 /* 错开时间，保持源源不断 */
@@ -1642,6 +1635,7 @@ img, svg { max-width: 100%; }
   border-top: 1px solid rgba(0, 0, 0, 0.04);
   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   margin-bottom: 60px; /* 和下方模块拉开间距 */
+  margin-top: -90px;
 
   /* 边缘渐隐遮罩：让文字从左边和右边慢慢浮现/消失，不再生硬切断 */
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
@@ -1880,15 +1874,14 @@ img, svg { max-width: 100%; }
 
 /* ---------- ≤ 768px：平板竖屏 / 大屏手机 ---------- */
 @media (max-width: 768px) {
-  :root {
-    --gutter: 20px;
-    --section-gap: 64px;
-  }
+:root {
+  --gutter: 20px;
+  --section-gap: 64px;
+}
 
-  /* 页头：隐藏中间导航，仅保留品牌 + 预约按钮 */
-  .nav-shell nav { display: none; }
-
-  /* Hero */
+/* 页头：隐藏中间导航，仅保留品牌 + 预约按钮 */
+.nav-shell nav { display: none; }
+/* Hero */
 .hero { gap: 32px; padding-top: 24px; padding-bottom: 48px; }
 .hero-copy {
 text-align: center; /* 文字水平居中 */
@@ -1932,94 +1925,79 @@ border-radius: 18px;
 
 /* 产品能力：星盘改为单列或两列卡片网格 (768px 适配) */
 .island-solutions-section { padding-top: 40px; contain-intrinsic-size: auto 1000px; }
-.orbit-highlight-wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px 20px;
-  height: auto;
-  padding: 0 20px;
-  position: relative;
-}
-.orbit-rings {
-  display: block;
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  /*margin-bottom: 100px;*/
-  transform: translate(-50%, -50%) scale(0.5);
-}
-.orbit-rings .ring-1 { width: 500px; height: 500px; }
-.orbit-lines { display: none; }
+  .orbit-highlight-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 20px;
+    height: auto;
+    padding: 0 20px;
+  }
+  .orbit-lines { display: none; }
 
-/* 核心球体适配 768px */
-.orbit-highlight-wrapper .orbit-core {
-  position: relative;
-  top: auto; left: auto;
-  grid-column: 1 / -1;
-  justify-self: center;
-  width: 200px;
-  height: 200px;
-  border-width: 5px;
-  aspect-ratio: 1 / 1;
-  transform: none;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+  /* 核心球体 */
+  .orbit-highlight-wrapper .orbit-core {
+    position: relative;
+    top: auto; left: auto;
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 200px;
+    height: 200px;
+    border-width: 5px;
+    aspect-ratio: 1 / 1;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    overflow: visible !important;
+  }
 
-/* 👇 同步缩小球体内部元素的尺寸 👇 */
-.orbit-core .logo-orbit {
-  height: 20px;
-  margin-bottom: 6px;
-}
+  /* 👇 核心修复：不要缩小圈圈，让它保持足够大 👇 */
+  .orbit-core .orbit-rings {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
 
-.orbit-core .core-title {
-  font-size: 22px;
-  letter-spacing: 2px;
-  margin-bottom: 4px;
-}
+    /* 把 scale 放大到 0.8，让虚线圈绝对能露出来 */
+    transform: translate(-50%, -50%) scale(0.8) !important;
 
-.orbit-core .core-content {
-  font-size: 10px;
-  letter-spacing: 4px;
-}
+    display: block !important;
+    z-index: 0; /* 放在橙色球体底层 */
+  }
 
-/* 卡片节点适配 768px */
-.orbit-highlight-wrapper .orbit-node {
-  position: relative;
-  inset: auto;
-  transform: none;
-  width: 100%;
-}
-.node-card {
-  width: 100%;
-  height: 100%;
-  padding: 24px 20px;
-  border-radius: 16px;
-}
-.node-num {
-  top: -14px;
-  left: 20px;
-  font-size: 13px;
-  padding: 2px 12px;
-}
+  /* 因为你没缩小圈圈，为了不让雷达波扩散得太大，把波纹初始大小限制一下 */
+  .orbit-core .radar-wave {
+    width: 200px !important;
+    height: 200px !important;
+    margin-top: -100px !important;
+    margin-left: -100px !important;
+    /* 关键：把内部 45% 变成透明，只让外边一圈发白光，这样看起来就是从边缘扩散的 */
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0.8) 65%,
+      rgba(255, 255, 255, 0) 100%
+    ) !important;
+  }
 
-.node-title {
-  font-size: 17px;
-  margin-bottom: 8px;
-}
-.node-desc {
-  font-size: 13px !important;
-  line-height: 1.6 !important;
-}
+  /* 文字和Logo */
+  .orbit-core .logo-orbit { height: 18px !important; margin-bottom: 4px !important; z-index: 2;}
+  .orbit-core .core-title { font-size: 22px !important; margin-bottom: 2px !important; z-index: 2;}
+  .orbit-core .core-content { font-size: 10px !important; letter-spacing: 3px !important; z-index: 2;}
+
+  /* 卡片适配 */
+  .orbit-highlight-wrapper .orbit-node { position: relative; inset: auto; transform: none; width: 100%; }
+  .node-card { width: 100%; height: 100%; padding: 24px 20px; border-radius: 16px; }
+  .node-num { top: -14px; left: 20px; font-size: 13px; padding: 2px 12px; }
+  .node-title { font-size: 17px; margin-bottom: 8px; }
+  .node-desc { font-size: 13px !important; line-height: 1.6 !important; }
 
 /* 滚动条 */
 .marquee-section {
-  padding: 16px 0;
+  padding: 8px 0;
   margin-bottom: 30px;
-  /* 稍微扩大两端的渐隐范围，防止小屏幕上看不清边缘文字 */
+  margin-top: -150px;
   -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
   mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
@@ -2050,34 +2028,34 @@ border-radius: 18px;
 .industry-icon { width: 50px; height: 50px; margin-bottom: 18px; border-radius: 14px; }
 .industry-card h3 { font-size: 18px; }
 
-  /* 服务区域 */
-  .service-map-card { gap: 28px; padding: 24px; border-radius: 24px; }
-  .service-map-visual { min-height: 340px; }
-  #service-map-echarts { height: 340px !important; }
-  .service-map-stats { gap: 32px; padding-top: 24px; }
-  .services-sub-section { margin-top: 40px; }
-  .services-grid { gap: 16px; }
-  .service-card { padding: 26px 22px; }
-  .service-icon { width: 50px; height: 50px; margin-bottom: 18px; border-radius: 14px; }
+/* 服务区域 */
+.service-map-card { gap: 28px; padding: 24px; border-radius: 24px; }
+.service-map-visual { min-height: 340px; }
+#service-map-echarts { height: 340px !important; }
+.service-map-stats { gap: 32px; padding-top: 24px; }
+.services-sub-section { margin-top: 40px; }
+.services-grid { gap: 16px; }
+.service-card { padding: 26px 22px; }
+.service-icon { width: 50px; height: 50px; margin-bottom: 18px; border-radius: 14px; }
 
-  /* 数据安全 */
-  .security-container { gap: 32px; padding: 36px 24px; border-radius: 24px; }
-  .security-badge { margin-bottom: 18px; }
-  .security-title { margin-bottom: 18px; }
-  .security-desc { font-size: 15px; }
-  .security-features { gap: 16px; }
-  .security-card { padding: 22px; }
+/* 数据安全 */
+.security-container { gap: 32px; padding: 36px 24px; border-radius: 24px; }
+.security-badge { margin-bottom: 18px; }
+.security-title { margin-bottom: 18px; }
+.security-desc { font-size: 15px; }
+.security-features { gap: 16px; }
+.security-card { padding: 22px; }
 
-  /* 页脚：品牌占整行，下方两列 */
-  .site-footer { margin-top: 40px; padding: 64px 0 40px; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px 32px; padding-bottom: 40px; }
-  .footer-brand { grid-column: 1 / -1; }
-  .footer-desc { max-width: none; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; padding-top: 24px; font-size: 14px; }
+/* 页脚：品牌占整行，下方两列 */
+.site-footer { margin-top: 40px; padding: 64px 0 40px; }
+.footer-top { grid-template-columns: 1fr 1fr; gap: 40px 32px; padding-bottom: 40px; }
+.footer-brand { grid-column: 1 / -1; }
+.footer-desc { max-width: none; }
+.footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; padding-top: 24px; font-size: 14px; }
 
-  /* 弹窗：输入框 16px 防止 iOS 自动放大 */
-  .form-row input,
-  .form-row textarea { font-size: 16px; }
+/* 弹窗：输入框 16px 防止 iOS 自动放大 */
+.form-row input,
+.form-row textarea { font-size: 16px; }
 }
 
 /* ---------- ≤ 480px：手机 ---------- */
@@ -2144,26 +2122,15 @@ border-radius: 18px;
   align-items: center;
   justify-content: center;
 }
-
-/*.orbit-core .logo-orbit {*/
-/*  height: 1px !important;       !* 强制高度 *!*/
-/*  width: auto !important;        !* 宽度自动等比缩放 *!*/
-/*  max-width: 60% !important;     !* 绝对不超过球体宽度的 60% *!*/
-/*  display: block !important;     !* 防止被拉伸成块级元素 *!*/
-/*  margin: 4px 0;*/
-/*}*/
-
 .orbit-core .core-title {
   font-size: 18px;
   letter-spacing: 1px;
   margin-bottom: 2px;
 }
-
 .orbit-core .core-content {
   font-size: 8px;
   letter-spacing: 3px;
 }
-
 .orbit-highlight-wrapper .orbit-core .orbit-rings { transform: translate(-50%, -50%) scale(0.35); }
 
 /* 卡片节点适配 */
@@ -2175,14 +2142,13 @@ border-radius: 18px;
   position: absolute;
   top: 7.5%;
   left: 50%;
-  /*margin-bottom: 100px;*/
   transform: translate(-50%, -50%) scale(0.5);
 }
-.orbit-rings .ring-1 { width: 380px; height: 380px; }
+.orbit-rings .ring-1 { width: 250px; height: 250px; }
 
 /* 滚动条 */
 .marquee-section {
-  padding: 12px 0;
+  padding: 5px 0;
   margin-bottom: 24px;
   -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
   mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);

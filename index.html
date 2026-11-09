@@ -168,25 +168,19 @@
       <!-- 环绕式亮点图 (6点星盘) -->
       <div class="orbit-highlight-wrapper">
         <!-- 背景同心圆 -->
-        <div class="orbit-rings">
-          <!-- 雷达波纹 (放在最底层，不断向外扩散) -->
-          <div class="radar-wave wave-1"></div>
-          <div class="radar-wave wave-2"></div>
-          <div class="radar-wave wave-3"></div>
-
-          <!-- 原有的虚线大圆圈 -->
-          <div class="ring ring-1"></div>
-          <div class="ring ring-2"></div>
-          <div class="ring ring-3"></div>
-        </div>
-
-        <!-- 中心核心圆 -->
         <div class="orbit-core">
+
+          <!-- 👇 把背景同心圆和雷达直接放进球体里 👇 -->
+          <div class="orbit-rings">
+            <div class="radar-wave wave-1"></div>
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+          </div>
+
           <img src="orbit-logo.png" alt="Orbit 星轨" class="core-logo">
-          <br>
           <div class="core-title">核心优势</div>
           <div class="core-content">ORBIT CORE</div>
-
         </div>
 
         <!-- 左侧节点群 -->
