@@ -213,10 +213,10 @@ img, svg { max-width: 100%; }
 .hero > * { min-width: 0; } /* 防止子元素最小内容宽度撑破单列网格 */
 .hero-copy {
   position: relative; z-index: 10; display: flex;
-  padding-left: 20vh; flex-direction: column;}
+  padding-left: 10vh; flex-direction: column;}
 .hero-copy h1 {
   margin: 0 0 24px;
-  font-size: clamp(42px, 4.5vw, 64px);
+  font-size: clamp(48px, 5vw, 76px);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -2px;
@@ -231,7 +231,7 @@ img, svg { max-width: 100%; }
 }
 .hero-lead {
   margin: 0 0 40px;
-  font-size: clamp(16px, 1.5vw, 18px);
+  font-size: clamp(18px, 1.8vw, 20px);
   line-height: 1.7;
   color: var(--muted);
 }
@@ -1895,7 +1895,7 @@ padding-left: 0; /* 去掉之前为了往右推加的左内边距 */
 justify-content: center;
 width: 100%;
 }
-.hero-copy h1 { text-align: center; font-size: 40px; letter-spacing: -1.5px; }
+.hero-copy h1 { text-align: center; font-size: 40px;  letter-spacing: -1.5px; }
 .hero-copy h1 .keep-together { padding-top: 12px; }
 .hero-lead { text-align: center; max-width: 90%; margin-bottom: 32px; font-size: 16px; }
 .hero-lead br { display: none; }
