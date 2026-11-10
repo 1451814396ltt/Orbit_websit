@@ -31,7 +31,11 @@
         <a href="#industry">适配行业</a>
         <a href="#support">服务支持</a>
       </nav>
-      <button class="nav-cta" data-trial >预约演示</button>
+
+      <div class="nav-actions">
+        <button class="nav-btn-register" data-trial>申请注册</button>
+        <button class="nav-btn-login" onclick="document.getElementById('login-dialog').showModal()">登录</button>
+      </div>
     </div>
   </header>
 
@@ -485,7 +489,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             合规对标 · 安全可控
           </div>
-          <h2 class="security-title">守护企业数据，<br>是星轨 ORBIT 的<br><span class="text-orange">首要准则</span></h2>
+          <h2 class="security-title">守护企业数据，<br>是 ORBIT 星轨的<br><span class="text-orange">首要准则</span></h2>
           <p class="security-desc">
             星轨 ORBIT 围绕企业数据资产构建严谨的权限管理与隐私隔离机制，以高标准的合规设计守护业务单据、报表与档案，确保您的数据仅为您所用。
           </p>
@@ -676,6 +680,27 @@
         <button type="button" onclick="document.getElementById('adminPasswordDialog').close()" style="padding: 8px 16px; border-radius: 8px; border: none; background: #eee; cursor: pointer;">取消</button>
         <button type="submit" style="padding: 8px 16px; border-radius: 8px; border: none; background: #111; color: #fff; cursor: pointer;">确认导出</button>
       </div>
+    </form>
+  </dialog>
+
+  <!-- 👇 登录验证弹窗 👇 -->
+  <dialog id="login-dialog" class="trial-dialog" aria-labelledby="login-title">
+    <button class="dialog-close" onclick="document.getElementById('login-dialog').close()" aria-label="关闭">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+
+    <h2 id="login-title" style="margin-bottom: 8px;">欢迎回来</h2>
+    <p class="dialog-intro">请输入您的企业服务器码以进入系统。</p>
+
+    <form id="login-form" class="trial-form" novalidate>
+      <div class="form-row">
+        <label for="server-code">服务器码</label>
+        <input type="text" id="server-code" placeholder="例如：ORBIT-8888" required>
+      </div>
+
+      <button type="submit" class="button button-dark trial-submit" style="margin-top: 10px;">
+        进入系统 <svg class="icon"><use href="#i-arrow"/></svg>
+      </button>
     </form>
   </dialog>
 

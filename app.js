@@ -550,133 +550,214 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ================= 🥚 宣传视频隐藏彩蛋 =================
-  const videoModal = document.getElementById('secretVideoModal');
-  const videoPlayer = document.getElementById('promoVideo');
-  const closeVideoBtn = document.getElementById('closeSecretVideo');
+// ================= 宣传视频隐藏彩蛋 =================
+const videoModal = document.getElementById('secretVideoModal');
+const videoPlayer = document.getElementById('promoVideo');
+const closeVideoBtn = document.getElementById('closeSecretVideo');
 
-  // 我们让中间的“核心优势”橙色球作为触发器
-  const secretTrigger = document.querySelector('.orbit-core');
+// 我们让中间的“核心优势”橙色球作为触发器
+const secretTrigger = document.querySelector('.orbit-core');
 
-  let clickCount = 0;
-  let clickTimer = null;
+let clickCount = 0;
+let clickTimer = null;
 
-  if (secretTrigger) {
-    // 给个提示：鼠标放上去变成小手，用户可能会好奇点一下
-    secretTrigger.style.cursor = 'pointer';
+if (secretTrigger) {
+  // 给个提示：鼠标放上去变成小手，用户可能会好奇点一下
+  secretTrigger.style.cursor = 'pointer';
 
-    secretTrigger.addEventListener('click', () => {
-      clickCount++;
+  secretTrigger.addEventListener('click', () => {
+    clickCount++;
 
-      // 如果 1 秒内连续点击了 3 次
-      if (clickCount === 3) {
-        videoModal.classList.add('show');
-        // 确保视频从头开始播放
-        videoPlayer.currentTime = 0;
-        videoPlayer.play();
+    // 如果 1 秒内连续点击了 3 次
+    if (clickCount === 3) {
+      videoModal.classList.add('show');
+      // 确保视频从头开始播放
+      videoPlayer.currentTime = 0;
+      videoPlayer.play();
 
-        clickCount = 0; // 重置
+      clickCount = 0; // 重置
+    } else {
+      // 如果点击间隔超过 1 秒，就重置计数器
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => {
+        clickCount = 0;
+      }, 1000);
+    }
+  });
+}
+
+// 关闭弹窗和视频
+if (closeVideoBtn) {
+  closeVideoBtn.addEventListener('click', () => {
+    videoModal.classList.remove('show');
+    videoPlayer.pause(); // 关闭时暂停播放
+  });
+}
+
+// 点击背景遮罩也能关闭
+videoModal.addEventListener('click', (e) => {
+  if (e.target === videoModal) {
+    videoModal.classList.remove('show');
+    videoPlayer.pause();
+  }
+});
+
+
+// ==========================================
+// 1. 表单提交：存入浏览器本地
+// ==========================================
+document.getElementById('trial-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // 获取输入
+  const newData = {
+    "姓名": document.getElementById('trial-name').value,
+    "手机号": document.getElementById('trial-phone').value,
+    "公司名称": document.getElementById('trial-company').value,
+    "需求": document.getElementById('trial-need').value,
+    "提交时间": new Date().toLocaleString()
+  };
+
+  // 存入浏览器本地
+  let savedLeads = JSON.parse(localStorage.getItem('my_leads')) || [];
+  savedLeads.push(newData);
+  localStorage.setItem('my_leads', JSON.stringify(savedLeads));
+
+  // 关闭弹窗，打开成功提示
+  document.getElementById('trial-dialog').close();
+  document.getElementById('success-dialog').showModal();
+  this.reset();
+});
+
+
+// ==========================================
+// 2. 管理员功能：密码验证与导出 (全部平级)
+// ==========================================
+const ADMIN_PASSWORD = "admin000"; // 你设置的专属密码
+
+// 触发弹窗
+window.triggerExport = function() {
+  let savedLeads = JSON.parse(localStorage.getItem('my_leads')) || [];
+  if (savedLeads.length === 0) {
+    alert("当前没有收集到任何客户数据哦！");
+    return;
+  }
+  document.getElementById('adminPasswordDialog').showModal();
+  document.getElementById('adminPasswordInput').value = "";
+};
+
+// 监听密码表单的提交 (用 window.onload 确保 DOM 加载完毕)
+window.addEventListener('load', function() {
+  const authForm = document.getElementById('adminAuthForm');
+  if (authForm) {
+    authForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputPwd = document.getElementById('adminPasswordInput').value;
+
+      if (inputPwd === ADMIN_PASSWORD) {
+        document.getElementById('adminPasswordDialog').close();
+        generateExcel(); // 调用下方的导出函数
       } else {
-        // 如果点击间隔超过 1 秒，就重置计数器
-        clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => {
-          clickCount = 0;
-        }, 1000);
+        alert("密码错误，无权访问！");
+        document.getElementById('adminPasswordInput').value = "";
       }
     });
   }
+});
 
-  // 关闭弹窗和视频
-  if (closeVideoBtn) {
-    closeVideoBtn.addEventListener('click', () => {
-      videoModal.classList.remove('show');
-      videoPlayer.pause(); // 关闭时暂停播放
-    });
+// 真正生成并下载 Excel (不要再嵌套了！)
+function generateExcel() {
+  let savedLeads = JSON.parse(localStorage.getItem('my_leads')) || [];
+
+  if (typeof XLSX === 'undefined') {
+    alert("Excel 组件未加载！请检查 HTML 里有没有引入 SheetJS 脚本。");
+    return;
   }
 
-  // 点击背景遮罩也能关闭
-  videoModal.addEventListener('click', (e) => {
-    if (e.target === videoModal) {
-      videoModal.classList.remove('show');
-      videoPlayer.pause();
-    }
-  });
+  const worksheet = XLSX.utils.json_to_sheet(savedLeads);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "客户线索");
+  XLSX.writeFile(workbook, `客户留资数据_${new Date().toLocaleDateString()}.xlsx`);
+}
 
+// ==========================================
+// 登录验证逻辑 (服务器码)
+// 服务器码的校验、联系客服、申请服务器码……
+// ==========================================
+const loginForm = document.getElementById('login-form');
+const loginDialog = document.getElementById('login-dialog');
+const serverCodeInput = document.getElementById('server-code');
 
-  // ==========================================
-  // 1. 表单提交：存入浏览器本地
-  // ==========================================
-  document.getElementById('trial-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+if (loginForm) {
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault(); // 阻止表单刷新
 
-    // 获取输入
-    const newData = {
-      "姓名": document.getElementById('trial-name').value,
-      "手机号": document.getElementById('trial-phone').value,
-      "公司名称": document.getElementById('trial-company').value,
-      "需求": document.getElementById('trial-need').value,
-      "提交时间": new Date().toLocaleString()
-    };
+    const code = serverCodeInput.value.trim();
+    const formRow = serverCodeInput.closest('.form-row');
 
-    // 存入浏览器本地
-    let savedLeads = JSON.parse(localStorage.getItem('my_leads')) || [];
-    savedLeads.push(newData);
-    localStorage.setItem('my_leads', JSON.stringify(savedLeads));
+    // 清理旧报错
+    formRow.classList.remove('has-error');
+    let errorEl = formRow.querySelector('.error-msg');
+    if (errorEl) errorEl.remove(); // 直接移除旧的，避免叠加
 
-    // 关闭弹窗，打开成功提示
-    document.getElementById('trial-dialog').close();
-    document.getElementById('success-dialog').showModal();
-    this.reset();
-  });
-
-
-  // ==========================================
-  // 2. 管理员功能：密码验证与导出 (全部平级)
-  // ==========================================
-  const ADMIN_PASSWORD = "admin000"; // 你设置的专属密码
-
-  // 触发弹窗
-  window.triggerExport = function() {
-    let savedLeads = JSON.parse(localStorage.getItem('my_leads')) || [];
-    if (savedLeads.length === 0) {
-      alert("当前没有收集到任何客户数据哦！");
-      return;
-    }
-    document.getElementById('adminPasswordDialog').showModal();
-    document.getElementById('adminPasswordInput').value = "";
-  };
-
-  // 监听密码表单的提交 (用 window.onload 确保 DOM 加载完毕)
-  window.addEventListener('load', function() {
-    const authForm = document.getElementById('adminAuthForm');
-    if (authForm) {
-      authForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const inputPwd = document.getElementById('adminPasswordInput').value;
-
-        if (inputPwd === ADMIN_PASSWORD) {
-          document.getElementById('adminPasswordDialog').close();
-          generateExcel(); // 调用下方的导出函数
-        } else {
-          alert("密码错误，无权访问！");
-          document.getElementById('adminPasswordInput').value = "";
-        }
-      });
-    }
-  });
-
-  // 真正生成并下载 Excel (不要再嵌套了！)
-  function generateExcel() {
-    let savedLeads = JSON.parse(localStorage.getItem('my_leads')) || [];
-
-    if (typeof XLSX === 'undefined') {
-      alert("Excel 组件未加载！请检查 HTML 里有没有引入 SheetJS 脚本。");
+    // 1. 判断空值
+    if (!code) {
+      showLoginError(formRow, '请输入服务器码');
       return;
     }
 
-    const worksheet = XLSX.utils.json_to_sheet(savedLeads);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "客户线索");
-    XLSX.writeFile(workbook, `客户留资数据_${new Date().toLocaleDateString()}.xlsx`);
+    // 2. 核心逻辑：判断服务器码是否等于 admin000
+    if (code === 'admin000') {
+      // 密码正确
+      loginDialog.close();
+      serverCodeInput.value = '';
+
+      // alert("验证成功！即将进入系统...");
+      window.location.href = 'https://shanjianerp.com';
+
+    } else {
+      // 密码错误，触发带按钮的报错
+      showLoginError(formRow, '服务器码错误，请重新输入', true);
+    }
+  });
+}
+
+// 封装显示红字及辅助按钮的工具函数
+function showLoginError(formRow, msg, showHelp = false) {
+  formRow.classList.add('has-error');
+
+  let errorEl = formRow.querySelector('.error-msg');
+  if (!errorEl) {
+    errorEl = document.createElement('div');
+    errorEl.className = 'error-msg';
+    formRow.appendChild(errorEl);
   }
+
+  // 基础错误文字
+  let htmlContent = `<span>${msg}</span>`;
+
+  // 如果需要显示客服和申请按钮
+  if (showHelp) {
+    htmlContent = `
+      <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+        <span>${msg}</span>
+        <span style="color: #ddd;">|</span>
+        <a href="mailto:yuzhiruanjian@163.com" style="color: #3f6bd8; text-decoration: none;">联系客服</a>
+        <span style="color: #ddd;">|</span>
+        <!-- 点击这个按钮会关闭登录框，并打开留资弹窗 -->
+        <a href="javascript:void(0)" onclick="switchToApply()" style="color: #3f6bd8; text-decoration: none;">获取服务器码</a>
+      </div>
+    `;
+  }
+
+  errorEl.innerHTML = htmlContent;
+}
+
+// 切换到留资弹窗的桥梁函数
+window.switchToApply = function() {
+  // 1. 关闭登录弹窗
+  document.getElementById('login-dialog').close();
+  // 2. 打开留资弹窗 (你网页里原本的 dialog)
+  document.getElementById('trial-dialog').showModal();
+};
 

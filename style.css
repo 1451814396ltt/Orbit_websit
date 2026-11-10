@@ -157,7 +157,6 @@ img, svg { max-width: 100%; }
   background: transparent;
   border: none;
 }
-
 .nav-shell {
   position: relative;
   display: flex;
@@ -169,12 +168,10 @@ img, svg { max-width: 100%; }
   padding: 0 30px;
   font-size: 16px;
 }
-
 .brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .logo-unizy { display: block; width: auto; height: 50px; }
 .logo-orbit { display: block; width: auto; height: 26px; }
 .brand-divider { display: block; width: 1px; height: 24px; background: rgba(17, 17, 17, 0.18); }
-
 .nav-shell nav { display: flex; gap: 48px; margin-left: auto; }
 .nav-cta {
   margin-left: auto;
@@ -186,7 +183,6 @@ img, svg { max-width: 100%; }
   white-space: nowrap;
   flex-shrink: 0;
   transition: background-color .2s, box-shadow .2s;
-
   border: none;       /* 清除黑色边框 */
   cursor: pointer;    /* 鼠标移上去变成小手 */
   font-family: inherit; /* 继承网页字体 */
@@ -197,10 +193,54 @@ img, svg { max-width: 100%; }
 }
 .nav-shell nav a { color: var(--muted); font-weight: 700; white-space: nowrap; transition: color .2s; }
 .nav-shell nav a:hover { color: var(--orange); }
-
-
 .nav-cta:hover { background: var(--orange); box-shadow: 0 6px 18px var(--orange-glow); }
 
+/* 导航栏右侧：注册与登录按钮 */
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px; /* 两个按钮之间的间距 */
+  flex-shrink: 0;
+}
+
+/* 申请注册（幽灵按钮 / 线条按钮） */
+.nav-btn-register {
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn-register:hover {
+  color: var(--orange);
+}
+
+/* 登录（实心黑色按钮，最明显） */
+.nav-btn-login {
+  background: var(--primary);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.nav-btn-login:hover {
+  background: var(--orange);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px var(--orange-glow);
+}
 
 /* =========================================================
    03. Hero 主视觉
@@ -1492,7 +1532,16 @@ img, svg { max-width: 100%; }
   color: #e74c3c;
   animation: shake .3s ease-in-out;
 }
-.form-row.has-error .error-msg { display: block; }
+.form-row.has-error .error-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.5;
+  padding-top: 4px;
+}
+.error-msg a:hover {
+  text-decoration: underline !important;
+}
 
 /* ---- 垂直滚动播报 ---- */
 .trial-vertical-ticker {
