@@ -650,7 +650,7 @@ img, svg { max-width: 100%; }
 .orbit-core .core-logo {
   display: block;
   width: auto;
-  height: 30px;
+  height: 50px;
   margin-bottom: 20px;
 }
 .orbit-core .core-title {
@@ -937,6 +937,33 @@ img, svg { max-width: 100%; }
 
 .service-map-desc { margin: 0; font-size: 15px; line-height: 1.8; color: var(--muted); }
 .service-map-desc strong { font-weight: 600; color: var(--ink); }
+
+/* =========================================
+   服务区域 - 发展状态提示
+   ========================================= */
+.region-status-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px; /* 和下方标签拉开一点距离 */
+  padding: 6px 14px;
+  background: rgba(252, 147, 41, 0.08); /* 极淡的橙色底 */
+  border: 1px solid rgba(252, 147, 41, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: #d16a2a; /* 稍微深一点的橙色文字 */
+  font-weight: 600;
+}
+
+/* 闪烁的橙色小圆点 */
+.region-status-notice .status-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--orange);
+  box-shadow: 0 0 6px var(--orange);
+  animation: pulse 1.5s infinite;
+}
 
 /* 区域标签 */
 .service-region-tags { display: flex; flex-wrap: wrap; gap: 12px; }

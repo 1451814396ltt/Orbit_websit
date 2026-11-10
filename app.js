@@ -173,17 +173,32 @@ quickPrompts.forEach(btn => {
 const mapDom = document.getElementById('service-map-echarts');
 if (mapDom && typeof echarts !== 'undefined') {
   // 网点坐标
+  // const servicePoints = [
+  //   { name: '北京', value: [116.405, 39.904] },
+  //   { name: '天津', value: [117.190, 39.125] },
+  //   { name: '石家庄', value: [114.502, 38.045] },
+  //   { name: '上海', value: [121.472, 31.231] },
+  //   { name: '南京', value: [118.796, 32.060] },
+  //   { name: '杭州', value: [120.153, 30.287] },
+  //   { name: '广州', value: [113.280, 23.125] },
+  //   { name: '深圳', value: [114.085, 22.547] },
+  //   { name: '珠海', value: [113.552, 22.225] },
+  //   { name: '成都', value: [104.065, 30.659] }
+  // ];
   const servicePoints = [
-    { name: '北京', value: [116.405, 39.904] },
-    { name: '天津', value: [117.190, 39.125] },
-    { name: '石家庄', value: [114.502, 38.045] },
-    { name: '上海', value: [121.472, 31.231] },
-    { name: '南京', value: [118.796, 32.060] },
-    { name: '杭州', value: [120.153, 30.287] },
-    { name: '广州', value: [113.280, 23.125] },
-    { name: '深圳', value: [114.085, 22.547] },
-    { name: '珠海', value: [113.552, 22.225] },
-    { name: '成都', value: [104.065, 30.659] }
+    // 👇 江浙沪：核心区域（亮橙色） status: 'core'
+    { name: '上海', value: [121.472, 31.231], status: 'core' },
+    { name: '南京', value: [118.796, 32.060], status: 'core' },
+    { name: '杭州', value: [120.153, 30.287], status: 'core' },
+
+    // 👇 其他区域：待开发（灰橙色） status: 'pending'
+    { name: '北京', value: [116.405, 39.904], status: 'pending' },
+    { name: '天津', value: [117.190, 39.125], status: 'pending' },
+    { name: '石家庄', value: [114.502, 38.045], status: 'pending' },
+    { name: '广州', value: [113.280, 23.125], status: 'pending' },
+    { name: '深圳', value: [114.085, 22.547], status: 'pending' },
+    { name: '珠海', value: [113.552, 22.225], status: 'pending' },
+    { name: '成都', value: [104.065, 30.659], status: 'pending' }
   ];
 
   const pointStyle = {
@@ -198,14 +213,33 @@ if (mapDom && typeof echarts !== 'undefined') {
       id: 'service-points',
       name: '分公司网点',
       coordinateSystem: 'geo',
-      data: servicePoints,
       symbolSize: 7,
-      itemStyle: pointStyle,
-      label: { show: false }
+      label: { show: false },
+
+      // 👇 核心修改：通过函数动态返回颜色 👇
+      itemStyle: {
+        color: function(params) {
+          // 如果是江浙沪（core），亮橙色 + 强发光
+          if (params.data.status === 'core') {
+            return 'rgb(252, 147, 41)';
+          }
+          // 如果是其他待开发区域（pending），灰橙色 + 弱发光
+          return 'rgba(252, 147, 41, 0.35)';
+        },
+        shadowBlur: function(params) {
+          return params.data.status === 'core' ? 15 : 5;
+        },
+        shadowColor: function(params) {
+          return params.data.status === 'core'
+            ? 'rgba(252, 147, 41, 0.8)'
+            : 'rgba(252, 147, 41, 0.2)';
+        }
+      }
     };
+
     return animated
-      ? { ...base, type: 'effectScatter', showEffectOn: 'render', rippleEffect: { brushType: 'stroke', scale: 25, period: 3 } }
-      : { ...base, type: 'scatter' };
+      ? { ...base, type: 'effectScatter', data: servicePoints, showEffectOn: 'render', rippleEffect: { brushType: 'stroke', scale: 25, period: 3 } }
+      : { ...base, type: 'scatter', data: servicePoints };
   }
 
   let mapChart = null;
@@ -247,7 +281,7 @@ if (mapDom && typeof echarts !== 'undefined') {
             zoom: 1.15,
             center: [104, 36],
             itemStyle: {
-              areaColor: '#e2e8f0',               // 实色灰蓝
+              areaColor: '#e2e8f0',               // 全国默认底色（浅灰蓝）
               borderColor: '#b3c0d1',             // 省份轮廓
               borderWidth: 1.2,
               shadowColor: 'rgba(17, 17, 17, 0.1)',
@@ -263,7 +297,7 @@ if (mapDom && typeof echarts !== 'undefined') {
               },
               label: { show: false }
             },
-            label: { show: false }
+            label: { show: false },
           },
           series: [buildPointSeries(true)]
         });
