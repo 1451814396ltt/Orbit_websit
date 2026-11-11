@@ -203,24 +203,6 @@ img, svg { max-width: 100%; }
   gap: 16px; /* 两个按钮之间的间距 */
   flex-shrink: 0;
 }
-
-/* 申请注册（幽灵按钮 / 线条按钮） */
-.nav-btn-register {
-  background: transparent;
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 500;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.nav-btn-register:hover {
-  color: var(--orange);
-}
-
 /* 登录（实心黑色按钮，最明显） */
 .nav-btn-login {
   background: var(--primary);
