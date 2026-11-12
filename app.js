@@ -761,3 +761,27 @@ window.switchToApply = function() {
   document.getElementById('trial-dialog').showModal();
 };
 
+// 如何部署
+/* ===== 部署模式切换 ===== */
+(function initDeployModeSwitch() {
+  const buttons = document.querySelectorAll('.deploy-mode-btn');
+  const panels = document.querySelectorAll('[data-deploy-panel]');
+  if (!buttons.length || !panels.length) return;
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.deployMode;
+      buttons.forEach(b => {
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      panels.forEach(p => {
+        const show = p.dataset.deployPanel === mode;
+        p.classList.toggle('is-active', show);
+        p.hidden = !show;
+      });
+    });
+  });
+})();
+

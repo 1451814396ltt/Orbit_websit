@@ -793,6 +793,206 @@ img, svg { max-width: 100%; }
     opacity: 0; /* 最终消失 */
   }
 }
+
+/* =========================================
+   部署模式选项卡
+   ========================================= */
+.deploy-section {
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 40px var(--gutter) var(--section-gap);
+}
+
+.deploy-container {
+  position: relative;
+  padding: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 30px 80px rgba(17, 17, 17, 0.05), inset 0 1px 0 #fff;
+  overflow: hidden;
+}
+
+.deploy-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+
+.deploy-title {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.deploy-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* 选项卡 */
+.deploy-mode-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.deploy-mode-btn {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 99px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.deploy-mode-btn:hover:not(.is-active) { color: var(--ink); }
+
+.deploy-mode-btn.is-active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 面板 */
+.deploy-panel {
+  position: relative;
+  z-index: 2;
+  animation: dialog-in .4s ease;
+}
+.deploy-panel[hidden] { display: none; }
+
+/* 步骤横幅背景（参考图中间那条浅灰色的带子） */
+.deploy-flow-bg {
+  background: rgba(247, 249, 250, 0.8);
+  border-radius: 20px;
+  padding: 40px 48px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.01);
+}
+
+/* 三步流程布局 */
+.deploy-flow-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.deploy-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+/* 图标外圈装饰 */
+.step-badge-wrap {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  transition: transform .3s ease;
+}
+
+/* 类似参考图的半包围双圈效果 */
+.step-badge-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px dashed rgba(252, 147, 41, 0.2);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.deploy-step:hover .step-badge-wrap {
+  transform: translateY(-3px);
+}
+.deploy-step:hover .step-badge-wrap::before {
+  opacity: 1;
+}
+
+/* 图标本体 */
+.step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: var(--orange);
+}
+.step-icon svg { width: 28px; height: 28px; }
+
+/* 文本内容 */
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.step-desc {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* 连接箭头 */
+.deploy-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  color: rgba(17, 17, 17, 0.15);
+}
+.deploy-connector svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* 底部按钮 */
+.deploy-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.deploy-cta {
+  padding: 14px 36px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
 /* =========================================================
    06. 适配行业
    ========================================================= */
@@ -896,6 +1096,127 @@ img, svg { max-width: 100%; }
 .industry-card:hover h3 { color: var(--accent); }
 .industry-card p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); }
 
+/* =========================================
+   极简定价模块
+   ========================================= */
+.pricing-section {
+  width: 100%;
+  max-width: 1000px; /* 限制宽度，两列更紧凑好看 */
+  margin: 0 auto;
+  padding: 40px var(--gutter) var(--section-gap);
+  text-align: center;
+}
+
+.pricing-header {
+  margin-bottom: 48px;
+}
+.pricing-title {
+  margin: 0 0 12px;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.pricing-subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* 卡片基本样式 */
+.pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background: #fff;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  text-align: left;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* 私有化部署高亮 */
+.pricing-card--highlight {
+  border: 2px solid var(--orange);
+  box-shadow: 0 20px 50px rgba(252, 147, 41, 0.1);
+}
+.pricing-card--highlight:hover {
+  box-shadow: 0 24px 60px rgba(252, 147, 41, 0.15);
+}
+
+/* 高亮角标 */
+.pricing-badge {
+  position: absolute;
+  top: -14px;
+  right: 24px;
+  padding: 4px 14px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 99px;
+  box-shadow: 0 4px 12px rgba(252, 147, 41, 0.3);
+}
+
+/* 文字部分 */
+.tier-name {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.tier-desc {
+  margin: 0 0 32px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  flex: 1; /* 撑开空间，保证底部按钮对齐 */
+}
+
+/* 价格数字 */
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 32px;
+  color: var(--ink);
+}
+.currency {
+  font-size: 24px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.amount {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.period {
+  font-size: 15px;
+  color: var(--muted);
+  margin-left: 8px;
+}
+.text-orange { color: var(--orange); }
+
+/* 按钮 */
+.pricing-btn {
+  width: 100%;
+  padding: 16px 0;
+  font-size: 16px;
+  border-radius: 12px;
+}
 
 /* =========================================================
    07. 服务区域 & 服务保障
@@ -1912,6 +2233,26 @@ img, svg { max-width: 100%; }
   .marquee-track {gap: 36px; /* 稍微缩小条目间距 */padding-left: 36px;animation-duration: 22s; /* 稍微放慢滚动速度，方便阅读 */}
   .marquee-track span {font-size: 13.5px; /* 字号微调 */}
 
+  /* 如何部署 */
+  .deploy-container { padding: 40px 32px; }
+  .deploy-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+
+  .deploy-flow-bg { padding: 32px; }
+  .deploy-flow-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .deploy-step {
+    width: 100%;
+  }
+
+  .deploy-connector {
+    transform: rotate(90deg);
+    margin: -10px 0 -10px 20px; /* 调整垂直箭头位置 */
+  }
+
   /* 适配行业 */
   .industry-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
 
@@ -2079,6 +2420,17 @@ border-radius: 18px;
   margin-right: 8px;
 }
 
+/* 如何部署 */
+.deploy-container { padding: 32px 20px; border-radius: 24px; }
+.deploy-flow-bg { padding: 24px 20px; border-radius: 16px; }
+.step-badge-wrap { width: 56px; height: 56px; }
+.step-icon svg { width: 24px; height: 24px; }
+.step-title { font-size: 16px; }
+.step-desc { font-size: 13px; }
+.deploy-mode-switch { width: 100%; }
+.deploy-mode-btn { flex: 1; text-align: center; }
+.deploy-cta { width: 100%; justify-content: center; }
+
 /* 适配行业 */
 .industry-header-wrap { margin-bottom: 36px; }
 .industry-desc { font-size: 15px; }
@@ -2087,6 +2439,14 @@ border-radius: 18px;
 .industry-card { padding: 26px 22px; }
 .industry-icon { width: 50px; height: 50px; margin-bottom: 18px; border-radius: 14px; }
 .industry-card h3 { font-size: 18px; }
+
+/* 定价 */
+.pricing-grid {
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+.pricing-card { padding: 32px 24px; }
+.amount { font-size: 40px; }
 
 /* 服务区域 */
 .service-map-card { gap: 28px; padding: 24px; border-radius: 24px; }
@@ -2229,6 +2589,12 @@ border-radius: 18px;
 .marquee-track strong {
   font-size: 12.5px; /* 加粗部分微微大一点点，形成层次 */
 }
+
+/* 如何部署 */
+.deploy-mode-switch { flex-direction: column; }
+.deploy-step-desc { font-size: 14px; }
+.deploy-note { flex-direction: column; gap: 10px; padding: 16px; }
+.deploy-cta { width: 100%; }
 
 /* 适配行业：单列 */
 .industry-header-wrap { margin-bottom: 28px; }
