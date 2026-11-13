@@ -53,13 +53,15 @@ body {
     text-align: center;
 }
 .sidebar-logo-wrap img {
-    width: 110px !important;
+    width: 210px !important;
     height: auto !important;
     display: block;
     margin: 0 auto 12px;
 }
 
 .sidebar-logo-wrap .manual-badge {
+    width: 210px !important;
+    height: auto !important;
     display: inline-block;
     background: var(--orange-light);
     color: var(--orange);
@@ -216,6 +218,180 @@ li { margin-bottom: 6px; }
 .role-banner .rb-icon { font-size: 24px; flex-shrink: 0; }
 .role-banner .rb-text { font-size: 14px; color: var(--text-sub); }
 .role-banner .rb-text strong { color: var(--text-main); }
+
+/* =========================================
+   插图样式
+   ========================================= */
+.ct-img {
+    width: 600px;
+    height: auto;
+    border-radius: 12px; /* 建议加上圆角，配合阴影更好看 */
+    /* 第一个阴影模拟贴地的暗影，第二个阴影模拟柔和的环境光 */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25),  0 10px 15px rgba(0, 0, 0, 0.15);  /* 贴近底部的实心硬阴影 */
+}
+/*图片放大弹窗样式*/
+/* 弹窗默认隐藏 */
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); /* 半透明黑底 */
+  backdrop-filter: blur(5px); /* 毛玻璃效果 */
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+/* 放大后的图片样式 */
+.lightbox-modal img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: zoomIn 0.3s ease;
+}
+
+/* 右上角的关闭按钮 */
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.lightbox-close:hover {
+  color: #fc9329;
+}
+
+/* 弹出动画 */
+@keyframes zoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* =========================================
+   图片说明文字样式
+   ========================================= */
+.orange-step-row {
+  display: flex;
+  align-items: center; /* 👈 关键修改：把 stretch 改为 center，实现垂直居中 */
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* 左侧序号：实心橘色 */
+.step-block {
+  margin-bottom: 48px; /* 第一步和第二步之间隔开很大的空隙 */
+}
+.orange-step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* 防止被挤压 */
+  width: 32px;
+  height: 32px;
+  /* 👈 如果你想让它变成正圆，可以把上面的 border-radius: 8px 改成 50% */
+  background: #fc9329;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(252, 147, 41, 0.25);
+}
+
+/* 右侧文字框：淡橘色背景 */
+.orange-step-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 12px 16px;
+  /* 渐变背景保持不变 */
+  background: linear-gradient(90deg, rgba(252, 147, 41, 0.12) 0%, rgba(255, 255, 255, 1) 100%);
+  border-radius: 8px;
+  color: #333;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   右侧快速导航 (Quick Nav) - 橙色版
+   ========================================= */
+.quick-nav {
+  position: fixed;
+  right: 40px;
+  top: 120px;
+  width: 150px;
+  z-index: 100;
+  display: none;
+}
+
+.quick-nav-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 16px;
+}
+
+.quick-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 12px; /* 左侧留出空间给指示线 */
+  border-left: 1px solid #e5e7eb; /* 浅灰色底栏 */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.quick-nav-link {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+  padding: 8px 0;
+  line-height: 1.4;
+  transition: color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: -13px; /* 让高亮线盖住灰线 */
+  padding-left: 12px;
+}
+
+.quick-nav-link:hover {
+  color: #fc9329; /* 悬浮橙色 */
+}
+
+.quick-nav-link.active {
+  color: #fc9329; /* 选中橙色 */
+  font-weight: 600;
+}
+
+/* 移动的橙色指示条 */
+.quick-nav-indicator {
+  position: absolute;
+  left: -1px;
+  width: 2px;
+  background-color: #fc9329; /* 橙线 */
+  transition: top 0.2s ease, height 0.2s ease;
+  border-radius: 2px;
+  opacity: 0;
+  z-index: 2;
+}
+
+/* 原生锚点跳转时，标题停在 sticky header 下方 */
+.content-section h1,
+.content-section h2,
+.content-section h3 {
+    scroll-margin-top: 90px; /* 按你 .top-header 实际高度调，header 约 60~70px 时 90 合适 */
+}
 
 /* 响应式 */
 @media (max-width: 1024px) {
