@@ -760,6 +760,9 @@ img, svg { max-width: 100%; }
 /* =========================================
    部署模式选项卡
    ========================================= */
+/* =========================================
+   部署模式专属样式（清晰版）
+   ========================================= */
 .deploy-section {
   width: 100%;
   max-width: 1700px;
@@ -772,14 +775,11 @@ img, svg { max-width: 100%; }
   padding: 50px;
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 32px;
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.72);
   box-shadow: 0 30px 80px rgba(17, 17, 17, 0.05), inset 0 1px 0 #fff;
-  overflow: hidden;
 }
 
 .deploy-header {
-  position: relative;
-  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -799,46 +799,62 @@ img, svg { max-width: 100%; }
   color: var(--muted);
 }
 
-/* 选项卡 */
+/* ===== 重塑的胶囊切换器 ===== */
 .deploy-mode-switch {
   display: inline-flex;
   gap: 4px;
-  padding: 5px;
-  border: 1px solid rgba(17, 17, 17, 0.08);
+  padding: 6px;
+  /* 背景做成浅灰色，让白色的选中块更明显 */
+  background: rgba(17, 17, 17, 0.05);
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.7);
 }
 
 .deploy-mode-btn {
-  padding: 8px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
   border: none;
   border-radius: 99px;
   background: transparent;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--muted);
   cursor: pointer;
-  transition: background-color .25s, color .25s, box-shadow .25s;
+  transition: all .3s ease;
 }
 
-.deploy-mode-btn:hover:not(.is-active) { color: var(--ink); }
+.deploy-mode-btn svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+  transition: opacity .3s;
+}
 
+.deploy-mode-btn:hover:not(.is-active) {
+  color: var(--ink);
+}
+
+/* 选中状态：白底 + 阴影，图标变成品牌橙色 */
 .deploy-mode-btn.is-active {
-  background: var(--primary);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* 面板 */
+.deploy-mode-btn.is-active svg {
+  opacity: 1;
+  color: var(--orange);
+}
+
+/* 面板容器 */
 .deploy-panel {
-  position: relative;
-  z-index: 2;
   animation: dialog-in .4s ease;
 }
 .deploy-panel[hidden] { display: none; }
 
-/* 步骤横幅背景（参考图中间那条浅灰色的带子） */
+/* 步骤横幅背景 */
 .deploy-flow-bg {
   background: rgba(247, 249, 250, 0.8);
   border-radius: 20px;
@@ -878,7 +894,7 @@ img, svg { max-width: 100%; }
   transition: transform .3s ease;
 }
 
-/* 类似参考图的半包围双圈效果 */
+/* 半包围双圈效果 */
 .step-badge-wrap::before {
   content: "";
   position: absolute;
@@ -2091,12 +2107,19 @@ img, svg { max-width: 100%; }
 
   /* 如何部署：三步仍横排，只收紧留白 */
   .deploy-container { padding: 40px 32px; }
-  .deploy-flow-bg { padding: 32px 28px; }
-  .deploy-flow-wrapper { gap: 12px; }
-  .deploy-step { gap: 12px; }
-  .step-badge-wrap { width: 56px; height: 56px; }
-  .step-title { font-size: 16px; }
-  .step-desc { font-size: 13px; }
+  .deploy-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+
+  .deploy-flow-bg { padding: 32px; }
+  .deploy-flow-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .deploy-step { width: 100%; }
+  .deploy-connector {
+    transform: rotate(90deg);
+    margin: -10px 0 -10px 20px;
+  }
 
   /* 适配行业 */
   .industry-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -2225,15 +2248,13 @@ img, svg { max-width: 100%; }
 
   /* 如何部署：三步改为竖排 */
   .deploy-container { padding: 32px 20px; border-radius: 24px; }
-  .deploy-header { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
-  .deploy-mode-switch { width: 100%; }
-  .deploy-mode-btn { flex: 1; text-align: center; }
   .deploy-flow-bg { padding: 24px 20px; border-radius: 16px; }
-  .deploy-flow-wrapper { flex-direction: column; align-items: flex-start; gap: 20px; }
-  .deploy-step { width: 100%; gap: 16px; }
-  .deploy-connector { margin: -8px 0 -8px 16px; transform: rotate(90deg); }
+  .step-badge-wrap { width: 56px; height: 56px; }
   .step-icon svg { width: 24px; height: 24px; }
-  .deploy-cta-wrap { margin-top: 24px; }
+  .step-title { font-size: 16px; }
+  .step-desc { font-size: 13px; }
+  .deploy-mode-switch { width: 100%; }
+  .deploy-mode-btn { flex: 1; justify-content: center; }
   .deploy-cta { width: 100%; justify-content: center; }
 
   /* 适配行业 */
